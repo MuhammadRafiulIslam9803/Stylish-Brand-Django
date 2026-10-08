@@ -144,10 +144,9 @@ STATIC_ROOT = 'staticfiles'
 
 
 # # SSLCommerz Sandbox Credentials
-# SSLCZ_STORE_ID = 'rafiul690344a6616a4'
-# SSLCZ_STORE_PASS = 'rafiul690344a6616a4@ssl'
-# SSLCZ_IS_SANDBOX = True 
-
+SSLCZ_STORE_ID = 'rafiu6ac77b6ba4fa5'
+SSLCZ_STORE_PASS = 'XflKKMP3o996'
+SSLCZ_IS_SANDBOX = True
 
 
 # CSRF_TRUSTED_ORIGINS = [
