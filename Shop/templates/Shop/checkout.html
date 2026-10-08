@@ -1,50 +1,517 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
+
 {% block title %}Buy Now{% endblock title %}
+
 {% block main-content %}
-<div class="container">
-    <div class="row mt-5">
-        <div class="col-sm-6">
-            <h4>Order Summary</h4>
-            <hr>
-            {% for item in cart_items %}
-            <div class="card mb-2">
-                <div class="card-body">
-                    <h5>Product: {{item.product.title}}</h5>
-                    <p>Quantity: {{item.quantity}}</p>
-                    <p class="fw-bold">Price: {{item.total_cost}}</p>
-                </div>
-            </div>
-            {% endfor %}
-            <p class="fw-bold">Total Cost = {{totalamount}}</p>
-            
-            <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe!
-                Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium
-                adipisci nisi nihil in et quis?</small>
-        </div>
-        <div class="col-sm-4 offset-sm-1">
-            <h4>Select Shipping Address</h4>
-            <hr>
-            <form action="{% url 'initiate_payment' %}" method="POST">
-                {% csrf_token %}
-                {% for ad in add %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5>{{ad.name}}</h5>
-                        <p>{{ad.division}}, {{ad.district}}, {{ad.thana}}, {{ad.villorroad}}, {{ad.zipcode}}</p>
-                    </div>
-                </div>
-                <div class="form-check mt-2 mb-5">
-                    <input class="form-check-input" type="radio" name="custid" id="custadd{{forloop.counter}}" value="{{ad.id}}">
-                    <label class="form-check-label fw-bold" for="">
-                        Address: {{forloop.counter}} </label>
-                </div>
-                {% endfor %}
-                <div class="text-end">
-                    <button type="submit" class="btn btn-warning mt-3 px-5 fw-bold">Continue</button>
-                </div>
-            </form>
-        </div>
+
+<div class="container py-5">
+<!-- ===================== TOP HEADER ===================== -->
+
+<div class="row align-items-end mb-5">
+
+    <div class="col-md-8">
+
+        <p class="text-warning fw-bold text-uppercase mb-2">
+            Secure Checkout
+        </p>
+
+        <h1 class="display-5 fw-bold mb-2">
+            Complete Your Purchase
+        </h1>
+
+        <p class="text-muted mb-0">
+            Review your order and choose where you want it delivered.
+        </p>
+
     </div>
+
+    <div class="col-md-4 text-md-end mt-3 mt-md-0">
+
+        <span class="badge bg-success-subtle text-success
+                     border border-success-subtle
+                     rounded-pill px-3 py-2">
+
+            ✓ Secure & Protected
+
+        </span>
+
+    </div>
+
 </div>
+
+
+
+<div class="row g-4">
+
+
+    <!-- ===================================================== -->
+    <!-- LEFT SIDE -->
+    <!-- ===================================================== -->
+
+    <div class="col-lg-7">
+
+        <!-- ORDER CARD -->
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <div class="card-body p-4 p-lg-5">
+
+
+                <!-- TITLE -->
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <div>
+
+                        <h4 class="fw-bold mb-1">
+                            Your Order
+                        </h4>
+
+                        <small class="text-muted">
+                            Products you're purchasing
+                        </small>
+
+                    </div>
+
+                    <span class="badge bg-dark rounded-pill px-3 py-2">
+                        {{ cart_items|length }} Items
+                    </span>
+
+                </div>
+
+
+                <!-- PRODUCTS -->
+
+                {% for item in cart_items %}
+
+                <div class="border rounded-4 p-3 mb-3">
+
+                    <div class="row align-items-center">
+
+
+                        <!-- PRODUCT ICON -->
+
+                        <div class="col-auto">
+
+                            <div
+                                class="bg-light rounded-4
+                                       d-flex align-items-center
+                                       justify-content-center"
+                                style="width:70px;height:70px;"
+                            >
+
+                                <span class="fs-4 fw-bold text-dark">
+                                    {{ forloop.counter }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PRODUCT NAME -->
+
+                        <div class="col">
+
+                            <h6 class="fw-bold mb-1">
+                                {{ item.product.title }}
+                            </h6>
+
+                            <div>
+
+                                <span class="badge
+                                             bg-light
+                                             text-secondary
+                                             border
+                                             rounded-pill">
+
+                                    Qty: {{ item.quantity }}
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- PRICE -->
+
+                        <div class="col-auto text-end">
+
+                            <small class="text-muted d-block">
+                                Total
+                            </small>
+
+                            <span class="fw-bold fs-5">
+                                ৳{{ item.total_cost }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+
+                <!-- DIVIDER -->
+
+                <hr class="my-4">
+
+
+                <!-- PRICE -->
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span class="text-muted">
+                        Subtotal
+                    </span>
+
+                    <span class="fw-semibold">
+                        ৳{{ totalamount }}
+                    </span>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between mb-3">
+
+                    <span class="text-muted">
+                        Delivery
+                    </span>
+
+                    <span class="fw-bold text-success">
+                        FREE
+                    </span>
+
+                </div>
+
+
+                <div class="d-flex justify-content-between
+                            align-items-center
+                            pt-3
+                            border-top">
+
+                    <span class="fw-bold fs-5">
+                        Total Amount
+                    </span>
+
+                    <span class="fw-bold display-6">
+                        ৳{{ totalamount }}
+                    </span>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <div class="bg-light rounded-4 p-3 mt-4">
+
+                    <small class="text-muted">
+
+                        <strong class="text-dark">
+                            Terms & Conditions
+                        </strong>
+
+                        <br>
+
+                        By continuing, you agree to our terms and
+                        conditions. Please verify your shipping
+                        information before placing the order.
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ===================================================== -->
+    <!-- RIGHT SIDE -->
+    <!-- ===================================================== -->
+
+    <div class="col-lg-5">
+
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <!-- HEADER -->
+
+            <div class="card-body p-4 p-lg-5">
+
+                <div class="mb-4">
+
+                    <p class="text-warning fw-bold mb-1">
+                        DELIVERY DETAILS
+                    </p>
+
+                    <h4 class="fw-bold mb-1">
+                        Select Address
+                    </h4>
+
+                    <small class="text-muted">
+                        Choose your preferred delivery location.
+                    </small>
+
+                </div>
+
+
+                <form
+                    action="{% url 'initiate_payment' %}"
+                    method="POST"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- ADDRESS LIST -->
+
+                    {% for ad in add %}
+
+                    <div class="mb-3">
+
+                        <input
+                            class="btn-check"
+                            type="radio"
+                            name="custid"
+                            id="custadd{{ forloop.counter }}"
+                            value="{{ ad.id }}"
+                            required
+                        >
+
+
+                        <label
+                            class="btn btn-outline-dark
+                                   text-start
+                                   w-100
+                                   rounded-4
+                                   p-3"
+                            for="custadd{{ forloop.counter }}"
+                        >
+
+                            <div class="d-flex">
+
+
+                                <!-- LOCATION ICON -->
+
+                                <div
+                                    class="bg-light rounded-circle
+                                           d-flex align-items-center
+                                           justify-content-center
+                                           flex-shrink-0
+                                           me-3"
+                                    style="width:45px;height:45px;"
+                                >
+
+                                    <span class="fw-bold">
+                                        {{ forloop.counter }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- ADDRESS -->
+
+                                <div class="flex-grow-1">
+
+                                    <div
+                                        class="d-flex
+                                               justify-content-between
+                                               align-items-center
+                                               mb-1"
+                                    >
+
+                                        <h6 class="fw-bold mb-0">
+                                            {{ ad.name }}
+                                        </h6>
+
+                                        <span
+                                            class="badge
+                                                   bg-light
+                                                   text-dark
+                                                   border"
+                                        >
+                                            Address
+                                        </span>
+
+                                    </div>
+
+
+                                    <p class="text-muted small mb-0">
+
+                                        {{ ad.division }},
+                                        {{ ad.district }},
+                                        {{ ad.thana }},
+
+                                        <br>
+
+                                        {{ ad.villorroad }},
+                                        {{ ad.zipcode }}
+
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                    {% endfor %}
+
+
+                    <!-- PAYMENT BOX -->
+
+                    <div
+                        class="bg-dark
+                               text-white
+                               rounded-4
+                               p-4
+                               mt-4"
+                    >
+
+                        <div class="d-flex
+                                    justify-content-between
+                                    align-items-center
+                                    mb-2">
+
+                            <span class="text-white-50">
+                                Amount to Pay
+                            </span>
+
+                            <span class="badge bg-success
+                                         rounded-pill">
+                                FREE DELIVERY
+                            </span>
+
+                        </div>
+
+
+                        <div class="d-flex
+                                    justify-content-between
+                                    align-items-end">
+
+                            <span class="display-6 fw-bold">
+                                ৳{{ totalamount }}
+                            </span>
+
+                            <small class="text-white-50">
+                                BDT
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="btn btn-warning
+                               w-100
+                               rounded-4
+                               fw-bold
+                               py-3
+                               mt-3
+                               fs-5"
+                    >
+
+                        Continue to Payment
+
+                        <span class="ms-2">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <div class="text-center mt-3">
+
+                        <small class="text-muted">
+                            🔒 Your payment information is secure
+                        </small>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- TRUST FEATURES -->
+<!-- ===================================================== -->
+
+<div class="row mt-5 g-3">
+
+    <div class="col-md-4">
+
+        <div class="border rounded-4 p-3 text-center">
+
+            <div class="fw-bold mb-1">
+                ✓ Secure Payment
+            </div>
+
+            <small class="text-muted">
+                Your transaction is protected
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="border rounded-4 p-3 text-center">
+
+            <div class="fw-bold mb-1">
+                ✓ Fast Delivery
+            </div>
+
+            <small class="text-muted">
+                Reliable delivery service
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-md-4">
+
+        <div class="border rounded-4 p-3 text-center">
+
+            <div class="fw-bold mb-1">
+                ✓ Easy Checkout
+            </div>
+
+            <small class="text-muted">
+                Simple and hassle-free
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
 {% endblock main-content %}
