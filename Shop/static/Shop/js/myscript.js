@@ -78,3 +78,4 @@ $(".remove-cart").click(function () {
     },
   });
 });
+

@@ -1,34 +1,361 @@
+
 {% extends 'Shop/base.html' %}
 {% load static %}
-{% block title %}Product Detail{% endblock title %}
+
+{% block title %}{{ product.title }} | Stylish Brand{% endblock title %}
+
 {% block main-content %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col-sm-6 text-center align-self-center">
-            <img src="{{product.product_image.url}}" alt="" class="img-fluid img-thumbnail">
+
+<div class="container py-5">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'home' %}"
+                    class="text-decoration-none text-success">
+                    Home
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active">
+                Product Details
+            </li>
+        </ol>
+    </nav>
+
+    <!-- Product Details -->
+    <div class="row g-5">
+
+        <!-- ================= PRODUCT IMAGE ================= -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+                <!-- Sale Badge -->
+                {% if product.selling_price > product.discounted_price %}
+                <div class="position-absolute top-0 start-0 m-3 z-1">
+                    <span class="badge bg-danger px-3 py-2 rounded-pill">
+                        SALE
+                    </span>
+                </div>
+                {% endif %}
+
+                <div class="bg-light p-4 text-center">
+
+                    <img src="{{ product.product_image.url }}"
+                        alt="{{ product.title }}"
+                        class="img-fluid"
+                        style="height: 500px; width: 100%; object-fit: contain;">
+
+                </div>
+
+            </div>
+
         </div>
-        <div class="col-sm-5 offset-sm-1">
-            <h2>Product Title: {{product.title}}</h2>
+
+        <!-- ================= PRODUCT INFORMATION ================= -->
+
+        <div class="col-lg-6">
+
+            <!-- Brand -->
+            <div class="mb-2">
+
+                <span class="badge bg-success-subtle text-success px-3 py-2">
+                    {{ product.brand }}
+                </span>
+
+            </div>
+
+            <!-- Product Title -->
+            <h1 class="fw-bold display-6 mb-3">
+                {{ product.title }}
+            </h1>
+
+            <!-- Rating -->
+            <div class="mb-3">
+
+                <span class="text-warning">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </span>
+
+                <span class="text-muted ms-2">
+                    4.5 | 120 Reviews
+                </span>
+
+            </div>
+
             <hr>
-            <p>Product Description: {{product.description}}</p> <br>
-            <h4>Tk. {{product.discounted_price}} <small class="fw-light text-decoration-line-through">{{product.selling_price}}</small></h4> <br>
-            
-            {% if item_already_in_cart %}
-            <a href="{% url 'showcart' %}" class="btn btn-warning shadow px-5 py-2 ms-4">Go to cart</a>
-            {% else %}
-            <form action="/add-to-cart" class="d-inline">
-                <input type="hidden" name="prod_id" value="{{product.id}}" id="prod_id">
-                <button type="Submit" class="btn btn-primary shadow px-5 py-2">Add to Cart</button>
-            </form>
-            {% endif %}
-            <a href="{% url 'buy-now' %}" class="btn btn-danger shadow px-5 py-2 ms-4">Buy Now</a>
-            <h5 class="mt-5">Available Offers</h5>
-            <ul>
-                <li>Bkash Offer 5% Unlimited Cashback on Payment</li>
-                <li>Special Price Get extra Tk.5000 off (price inclusive of discount)</li>
-                <li>Partner Offer Tk. 1000 Gift Card on Every 1000th Transaction with Bkash, Nagad.</li>
-            </ul>
+
+            <!-- Price -->
+            <div class="my-4">
+
+                <span class="display-6 fw-bold text-success">
+                    Tk. {{ product.discounted_price }}
+                </span>
+
+                {% if product.selling_price > product.discounted_price %}
+
+                <span class="fs-5 text-muted text-decoration-line-through ms-3">
+                    Tk. {{ product.selling_price }}
+                </span>
+
+                <span class="badge bg-danger ms-2">
+                    SAVE
+                </span>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+
+                <h5 class="fw-bold">
+                    Product Description
+                </h5>
+
+                <p class="text-muted lh-lg">
+                    {{ product.description }}
+                </p>
+
+            </div>
+
+            <!-- Delivery Information -->
+            <div class="row g-3 mb-4">
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-3 p-3 text-center h-100">
+
+                        <i class="fas fa-truck text-success fs-4 mb-2"></i>
+
+                        <h6 class="fw-bold mb-1">
+                            Fast Delivery
+                        </h6>
+
+                        <small class="text-muted">
+                            2–5 Working Days
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-3 p-3 text-center h-100">
+
+                        <i class="fas fa-shield-alt text-success fs-4 mb-2"></i>
+
+                        <h6 class="fw-bold mb-1">
+                            Secure Payment
+                        </h6>
+
+                        <small class="text-muted">
+                            100% Secure
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-3 p-3 text-center h-100">
+
+                        <i class="fas fa-undo text-success fs-4 mb-2"></i>
+
+                        <h6 class="fw-bold mb-1">
+                            Easy Return
+                        </h6>
+
+                        <small class="text-muted">
+                            7 Days Return
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= CART / BUY BUTTON ================= -->
+
+            <div class="d-flex flex-wrap gap-3 mb-4">
+
+                {% if item_already_in_cart %}
+
+                <a href="{% url 'showcart' %}"
+                    class="btn btn-warning btn-lg px-5 shadow-sm">
+
+                    <i class="fas fa-shopping-cart me-2"></i>
+                    Go to Cart
+
+                </a>
+
+                {% else %}
+
+                <form action="/add-to-cart" class="d-inline">
+
+                    <input type="hidden"
+                        name="prod_id"
+                        value="{{ product.id }}"
+                        id="prod_id">
+
+                    <button type="submit"
+                        class="btn btn-success btn-lg px-5 shadow-sm">
+
+                        <i class="fas fa-cart-plus me-2"></i>
+                        Add to Cart
+
+                    </button>
+
+                </form>
+
+                {% endif %}
+
+                <a href="{% url 'buy-now' %}"
+                    class="btn btn-danger btn-lg px-5 shadow-sm">
+
+                    <i class="fas fa-bolt me-2"></i>
+                    Buy Now
+
+                </a>
+
+            </div>
+
+            <!-- ================= OFFERS ================= -->
+
+            <div class="card border-0 bg-light rounded-4 p-4">
+
+                <h5 class="fw-bold mb-3">
+
+                    <i class="fas fa-tags text-success me-2"></i>
+                    Available Offers
+
+                </h5>
+
+                <div class="mb-3">
+
+                    <i class="fas fa-check-circle text-success me-2"></i>
+
+                    <span>
+                        Bkash Offer – 5% Unlimited Cashback on Payment
+                    </span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <i class="fas fa-check-circle text-success me-2"></i>
+
+                    <span>
+                        Special Price – Get extra Tk. 5000 off
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <i class="fas fa-check-circle text-success me-2"></i>
+
+                    <span>
+                        Partner Offer – Tk. 1000 Gift Card on selected
+                        transactions
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
+    <!-- ================= PRODUCT FEATURES ================= -->
+
+    <div class="row g-4 mt-5 pt-4 border-top">
+
+        <div class="col-md-3">
+
+            <div class="text-center">
+
+                <i class="fas fa-award text-success fs-2 mb-3"></i>
+
+                <h6 class="fw-bold">
+                    Premium Quality
+                </h6>
+
+                <small class="text-muted">
+                    Carefully selected products
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="text-center">
+
+                <i class="fas fa-truck text-success fs-2 mb-3"></i>
+
+                <h6 class="fw-bold">
+                    Fast Delivery
+                </h6>
+
+                <small class="text-muted">
+                    Delivery across Bangladesh
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="text-center">
+
+                <i class="fas fa-lock text-success fs-2 mb-3"></i>
+
+                <h6 class="fw-bold">
+                    Secure Shopping
+                </h6>
+
+                <small class="text-muted">
+                    Your information is protected
+                </small>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="text-center">
+
+                <i class="fas fa-headset text-success fs-2 mb-3"></i>
+
+                <h6 class="fw-bold">
+                    Customer Support
+                </h6>
+
+                <small class="text-muted">
+                    We're here to help
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
+
 {% endblock main-content %}
