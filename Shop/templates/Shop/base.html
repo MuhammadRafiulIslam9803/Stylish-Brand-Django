@@ -79,7 +79,7 @@
 
                         <li class="nav-item">
                             <a class="nav-link active fw-semibold px-3"
-                                href="#">
+                                href="{% url 'orders' %}">>
                                 <i class="fas fa-truck me-1"></i>
                                 Delivery
                             </a>
@@ -112,10 +112,38 @@
                                 </li>
 
                                 <li>
-                                    <a class="dropdown-item py-2" href="#">
+                                    <a class="dropdown-item py-2"
+                                        href="{% url 'saree' %}">
                                         <i
-                                            class="fas fa-heart text-danger me-2"></i>
+                                            class="fas fa-gem text-danger me-2"></i>
                                         Saree
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        href="{% url 'borkha' %}">
+                                        <i
+                                            class="fas fa-moon text-success me-2"></i>
+                                        Borkha
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        href="{% url 'gents-pant' %}">
+                                        <i
+                                            class="fas fa-user-tie text-primary me-2"></i>
+                                        Gents Pant
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        href="{% url 'baby-fashion' %}">
+                                        <i
+                                            class="fas fa-child text-info me-2"></i>
+                                        Baby Fashion
                                     </a>
                                 </li>
 

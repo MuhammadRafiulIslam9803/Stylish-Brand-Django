@@ -169,23 +169,121 @@ def orders(request):
     return render(request, "Shop/orders.html", {"order_placed": op})
 
 
+# for all cetagory filtering by brand and price range
+
+
+def category_products(request, category_code, data=None):
+    category_info = {
+        "S": {
+            "title": "Saree Collection",
+            "brands": ["Rang", "Aarong", "Kay Kraft"],
+            "all_url": "saree",
+            "item_url": "sareeitem",
+        },
+        "GP": {
+            "title": "Gents Pant Collection",
+            "brands": ["Yellow", "Apex", "Ecstasy", "Sailor"],
+            "all_url": "gents-pant",
+            "item_url": "gentspantitem",
+        },
+        "BK": {
+            "title": "Borkha Collection",
+            "brands": ["Aarong", "Rang", "Kay Kraft"],
+            "all_url": "borkha",
+            "item_url": "borkhaitem",
+        },
+        "BF": {
+            "title": "Baby Fashion Collection",
+            "brands": ["Rang", "Kay Kraft", "Aarong", "Sailor"],
+            "all_url": "baby-fashion",
+            "item_url": "babyfashionitem",
+        },
+    }
+
+    info = category_info[category_code]
+
+    products = Product.objects.filter(category=category_code)
+
+    if data == "below":
+        products = products.filter(discounted_price__lt=20000)
+
+    elif data == "above":
+        products = products.filter(discounted_price__gt=20000)
+
+    elif data is not None:
+        if data not in info["brands"]:
+            products = Product.objects.none()
+        else:
+            products = products.filter(brand=data)
+
+    return render(
+        request,
+        "Shop/category_products.html",
+        {
+            "products": products,
+            "category_title": info["title"],
+            "brands": info["brands"],
+            "category_url_name": info["all_url"],
+            "item_url_name": info["item_url"],
+            "selected_filter": data,
+        },
+    )
+
+
+def saree(request, data=None):
+    return category_products(request, "S", data)
+
+
+def gents_pant(request, data=None):
+    return category_products(request, "GP", data)
+
+
+def borkha(request, data=None):
+    return category_products(request, "BK", data)
+
+
+def baby_fashion(request, data=None):
+    return category_products(request, "BF", data)
+
+
 # def change_password(request):
 #  return render(request, 'Shop/changepassword.html')
 
+# for lehenga filtering
+
+# def lehenga(request, data=None):
+#     if data == None:
+#         lehengas = Product.objects.filter(category="L")
+#     elif data == "lubnan" or data == "infinity":
+#         lehengas = Product.objects.filter(category="L").filter(brand=data)
+#     elif data == "below":
+#         lehengas = Product.objects.filter(category="L").filter(
+#             discounted_price__lt=20000
+#         )
+#     elif data == "above":
+#         lehengas = Product.objects.filter(category="L").filter(
+#             discounted_price__gt=20000
+#         )
+#     return render(request, "Shop/lehenga.html", {"lehengas": lehengas})
+
 
 def lehenga(request, data=None):
-    if data == None:
+
+    if data is None:
         lehengas = Product.objects.filter(category="L")
-    elif data == "lubnan" or data == "infinity":
-        lehengas = Product.objects.filter(category="L").filter(brand=data)
+
+    elif data in ["Rang", "Sailor", "Kay Kraft", "Yellow"]:
+        lehengas = Product.objects.filter(category="L", brand=data)
+
     elif data == "below":
-        lehengas = Product.objects.filter(category="L").filter(
-            discounted_price__lt=20000
-        )
+        lehengas = Product.objects.filter(category="L", discounted_price__lt=20000)
+
     elif data == "above":
-        lehengas = Product.objects.filter(category="L").filter(
-            discounted_price__gt=20000
-        )
+        lehengas = Product.objects.filter(category="L", discounted_price__gt=20000)
+
+    else:
+        lehengas = Product.objects.none()
+
     return render(request, "Shop/lehenga.html", {"lehengas": lehengas})
 
 
@@ -196,15 +294,10 @@ def lehenga(request, data=None):
 #  return render(request, 'Shop/customerregistration.html')
 
 
-
 class CustomerRegistrationView(View):
     def get(self, request):
         form = CustomerRegistrationForm()
-        return render(
-            request,
-            "Shop/customerregistration.html",
-            {"form": form}
-        )
+        return render(request, "Shop/customerregistration.html", {"form": form})
 
     def post(self, request):
         form = CustomerRegistrationForm(request.POST)
@@ -212,16 +305,11 @@ class CustomerRegistrationView(View):
         if form.is_valid():
             form.save()
             messages.success(
-                request,
-                "Congratulations! Registration successfully done."
+                request, "Congratulations! Registration successfully done."
             )
             return redirect("login")
 
-        return render(
-            request,
-            "Shop/customerregistration.html",
-            {"form": form}
-        )
+        return render(request, "Shop/customerregistration.html", {"form": form})
 
 
 @login_required

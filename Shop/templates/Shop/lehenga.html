@@ -1,40 +1,402 @@
+
 {% extends 'Shop/base.html' %}
 {% load static %}
-{% block title %}Lehenga{% endblock title %}
+
+{% block title %}Lehenga Collection{% endblock title %}
+
 {% block main-content %}
-<div class="container my-5">
-    <div class="row">
-        <div class="col-sm-3">
-            <div class="list-group">
-                <a href="{% url 'lehenga' %}" class="list-group-item list-group-item-action active" aria-current="true">
-                    All Lehenga
-                </a>
-                <a href="{% url 'lehengaitem' 'lubnan' %}" class="list-group-item list-group-item-action">Lubnan</a>
-                <a href="{% url 'lehengaitem' 'infinity' %}" class="list-group-item list-group-item-action">Infinity</a>
-                <a href="{% url 'lehengaitem' 'above' %}" class="list-group-item list-group-item-action">Above 20k</a>
-                <a href="{% url 'lehengaitem' 'below' %}" class="list-group-item list-group-item-action">below 20k</a>
-            
-                
-             
-            </div>
+
+<style>
+    .lehenga-page {
+        background: #fffaf8;
+        min-height: 100vh;
+        padding: 35px 0 60px;
+    }
+
+    .collection-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .collection-header .subtitle {
+        color: #a85565;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+    }
+
+    .collection-header h1 {
+        color: #30202a;
+        font-family: Georgia, serif;
+        font-size: clamp(30px, 4vw, 43px);
+        font-weight: 700;
+        margin: 10px 0;
+    }
+
+    .collection-header p {
+        color: #81727a;
+        font-size: 14px;
+        margin-bottom: 0;
+    }
+
+    .filter-sidebar {
+        background: #ffffff;
+        border: 1px solid #f0e2e3;
+        border-radius: 14px;
+        padding: 22px 18px;
+        position: sticky;
+        top: 20px;
+    }
+
+    .filter-title {
+        color: #30202a;
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 18px;
+    }
+
+    .filter-heading {
+        color: #51404a;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        margin: 22px 0 10px;
+        text-transform: uppercase;
+    }
+
+    .filter-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #65535c;
+        text-decoration: none;
+        padding: 11px 12px;
+        margin-bottom: 5px;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: .25s ease;
+    }
+
+    .filter-link:hover,
+    .filter-link.active {
+        background: #9f354f;
+        color: #ffffff;
+    }
+
+    .filter-link .arrow {
+        font-size: 17px;
+    }
+
+    .products-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .products-heading h5 {
+        color: #30202a;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .product-count {
+        color: #897680;
+        font-size: 13px;
+    }
+
+    .lehenga-card {
+        height: 100%;
+        background: #ffffff;
+        border: 1px solid #f0e6e5;
+        border-radius: 13px;
+        overflow: hidden;
+        transition: transform .3s ease, box-shadow .3s ease;
+    }
+
+    .lehenga-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 28px rgba(76, 36, 48, .10);
+    }
+
+    .product-image {
+        position: relative;
+        overflow: hidden;
+        background: #f8efed;
+    }
+
+    .product-image img {
+        display: block;
+        width: 100%;
+        height: 290px;
+        object-fit: cover;
+        transition: transform .5s ease;
+    }
+
+    .lehenga-card:hover .product-image img {
+        transform: scale(1.05);
+    }
+
+    .product-tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        background: #9f354f;
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .5px;
+        padding: 6px 10px;
+        border-radius: 20px;
+    }
+
+    .product-info {
+        padding: 16px 13px 18px;
+    }
+
+    .product-name {
+        color: #35252e;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.6;
+        min-height: 44px;
+        margin-bottom: 9px;
+    }
+
+    .product-price {
+        color: #9f354f;
+        font-size: 17px;
+        font-weight: 700;
+    }
+
+    .old-price {
+        color: #a69aa0;
+        font-size: 12px;
+        font-weight: 400;
+        text-decoration: line-through;
+        margin-left: 5px;
+    }
+
+    .view-product {
+        display: block;
+        margin-top: 13px;
+        padding: 9px;
+        border: 1px solid #9f354f;
+        border-radius: 7px;
+        text-align: center;
+        color: #9f354f;
+        font-size: 12px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: .25s ease;
+    }
+
+    .view-product:hover {
+        background: #9f354f;
+        color: #ffffff;
+    }
+
+    .empty-products {
+        background: #ffffff;
+        border: 1px dashed #e4cdd2;
+        border-radius: 12px;
+        text-align: center;
+        padding: 45px 15px;
+        color: #81727a;
+    }
+
+    @media (max-width: 767px) {
+        .lehenga-page {
+            padding-top: 25px;
+        }
+
+        .filter-sidebar {
+            position: static;
+            margin-bottom: 25px;
+        }
+
+        .product-image img {
+            height: 230px;
+        }
+
+        .product-info {
+            padding: 12px 9px;
+        }
+
+        .product-name {
+            font-size: 12px;
+        }
+
+        .product-price {
+            font-size: 14px;
+        }
+
+        .old-price {
+            display: block;
+            margin-left: 0;
+            margin-top: 3px;
+        }
+    }
+</style>
+
+<section class="lehenga-page">
+    <div class="container">
+
+        <!-- Collection Header -->
+        <div class="collection-header">
+            <span class="subtitle">Elegance & Tradition</span>
+            <h1>Our Lehenga Collection</h1>
+            <p>Discover beautiful designs for your special moments.</p>
         </div>
-        <div class="col-sm-8">
-            <div class="row">
-                {% for product in lehengas %}
-                <div class="col-sm-4 text-center mb-4">
-                    <a href="{% url 'product-detail' product.id %}" class="btn">
-                        <div class="item">
-                            <img src="{{product.product_image.url}}" alt="" height="300" class="">
-                            <div class="fw-bold">{{product.title}}</div>
-                            <div class="fw-bold">Tk. {{product.discounted_price}} <small
-                                    class="fw-light text-decoration-line-through">{{product.selling_price}}</small>
-                            </div>
-                        </div>
+
+        <div class="row g-4">
+
+            <!-- Sidebar Filters -->
+            <div class="col-lg-3 col-md-4">
+                <aside class="filter-sidebar">
+
+                    <div class="filter-title">
+                        <i class="fas fa-sliders-h me-2"></i>
+                        Filter Collection
+                    </div>
+
+                    <div class="filter-heading">Categories</div>
+
+                    <a href="{% url 'lehenga' %}"
+                       class="filter-link {% if not request.resolver_match.kwargs.data %}active{% endif %}">
+                        <span>All Lehenga</span>
+                        <span class="arrow">&rsaquo;</span>
                     </a>
-                </div>
-                {% endfor %}
+
+                    <div class="filter-heading">Shop by Brand</div>
+
+                    <a href="{% url 'lehengaitem' 'Rang' %}"
+                       class="filter-link">
+                        <span>Rang</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                    <a href="{% url 'lehengaitem' 'Sailor' %}"
+                       class="filter-link">
+                        <span>Sailor</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                    <a href="{% url 'lehengaitem' 'Kay Kraft' %}"
+                       class="filter-link">
+                        <span>Kay Kraft</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                    <a href="{% url 'lehengaitem' 'Yellow' %}"
+                       class="filter-link">
+                        <span>Yellow</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                    <div class="filter-heading">Price Range</div>
+
+                    <a href="{% url 'lehengaitem' 'below' %}"
+                       class="filter-link">
+                        <span>Below ৳20,000</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                    <a href="{% url 'lehengaitem' 'above' %}"
+                       class="filter-link">
+                        <span>Above ৳20,000</span>
+                        <span class="arrow">&rsaquo;</span>
+                    </a>
+
+                </aside>
             </div>
+
+            <!-- Product Collection -->
+            <div class="col-lg-9 col-md-8">
+
+                <div class="products-heading">
+                    <h5>Explore Our Designs</h5>
+                    <span class="product-count">
+                        Beautiful styles, timeless elegance
+                    </span>
+                </div>
+
+                <div class="row g-3 g-lg-4">
+
+                    {% for product in lehengas %}
+
+                    <div class="col-6 col-lg-4">
+                        <div class="lehenga-card">
+
+                            <a href="{% url 'product-detail' product.id %}"
+                               class="text-decoration-none">
+
+                                <div class="product-image">
+
+                                    <img
+                                        src="{{ product.product_image.url }}"
+                                        alt="{{ product.title }}"
+                                        loading="lazy">
+
+                                    <span class="product-tag">
+                                        COLLECTION
+                                    </span>
+
+                                </div>
+
+                                <div class="product-info">
+
+                                    <div class="product-name">
+                                        {{ product.title }}
+                                    </div>
+
+                                    <div>
+                                        <span class="product-price">
+                                            ৳{{ product.discounted_price }}
+                                        </span>
+
+                                        <span class="old-price">
+                                            ৳{{ product.selling_price }}
+                                        </span>
+                                    </div>
+
+                                    <span class="view-product">
+                                        VIEW DETAILS
+                                        <i class="fas fa-arrow-right ms-1"></i>
+                                    </span>
+
+                                </div>
+
+                            </a>
+
+                        </div>
+                    </div>
+
+                    {% empty %}
+
+                    <div class="col-12">
+                        <div class="empty-products">
+                            <i class="fas fa-search fa-2x mb-3"></i>
+                            <h5>No Lehenga Found</h5>
+                            <p class="mb-3">
+                                No products match this filter right now.
+                            </p>
+                            <a href="{% url 'lehenga' %}"
+                               class="btn btn-danger">
+                                View All Lehenga
+                            </a>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
         </div>
     </div>
-</div>
+</section>
+
 {% endblock main-content %}
