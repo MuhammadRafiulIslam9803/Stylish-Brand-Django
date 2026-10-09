@@ -196,17 +196,32 @@ def lehenga(request, data=None):
 #  return render(request, 'Shop/customerregistration.html')
 
 
+
 class CustomerRegistrationView(View):
     def get(self, request):
         form = CustomerRegistrationForm()
-        return render(request, "Shop/customerregistration.html", {"form": form})
+        return render(
+            request,
+            "Shop/customerregistration.html",
+            {"form": form}
+        )
 
     def post(self, request):
         form = CustomerRegistrationForm(request.POST)
+
         if form.is_valid():
-            messages.success(request, "Congratulations registration successfully done")
             form.save()
-            return render(request, "Shop/customerregistration.html", {"form": form})
+            messages.success(
+                request,
+                "Congratulations! Registration successfully done."
+            )
+            return redirect("login")
+
+        return render(
+            request,
+            "Shop/customerregistration.html",
+            {"form": form}
+        )
 
 
 @login_required

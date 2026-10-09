@@ -1,36 +1,361 @@
+
 {% extends 'Shop/base.html' %}
 {% load static %}
-{% block title %}Buy Now{% endblock title %}
+
+{% block title %}My Addresses{% endblock title %}
+
 {% block main-content %}
-<div class="container my-5">
-    <div class="row">
-        <h3>Welcome <span class="text-capitalize">{{request.user}}</span></h3>
-        <div class="col-sm-2 border-end">
-            <ul class="list-unstyled">
-                <li class="d-grid"><a href="{% url 'profile' %}" class="btn">Profile</a></li>
-                <li class="d-grid"><a href="{% url 'address' %}" class="btn {{active}}">Address</a></li>
-            </ul>
+
+<style>
+    .address-page {
+        padding: 40px 0 60px;
+        background: #f8fafc;
+        min-height: 75vh;
+    }
+
+    .address-heading {
+        font-weight: 700;
+        color: #1e293b;
+        letter-spacing: -0.5px;
+    }
+
+    .address-subtitle {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .profile-sidebar {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        margin-bottom: 8px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #475569;
+        font-weight: 500;
+        transition: all 0.25s ease;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+    }
+
+    .address-card {
+        height: 100%;
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .address-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+    }
+
+    .address-card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 20px;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .address-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+        background: #eef2ff;
+        color: #4f46e5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 23px;
+        flex-shrink: 0;
+    }
+
+    .address-card-header h5 {
+        margin: 0 0 5px;
+        font-size: 16px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .address-card-header small {
+        color: #64748b;
+    }
+
+    .address-details {
+        padding: 20px;
+    }
+
+    .address-detail {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        align-items: flex-start;
+    }
+
+    .address-detail:last-child {
+        margin-bottom: 0;
+    }
+
+    .detail-icon {
+        color: #64748b;
+        width: 18px;
+        text-align: center;
+        margin-top: 3px;
+    }
+
+    .detail-label {
+        color: #64748b;
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+
+    .detail-value {
+        color: #1e293b;
+        font-size: 14px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+    .empty-address {
+        background: #fff;
+        border: 1px dashed #cbd5e1;
+        border-radius: 16px;
+        padding: 55px 20px;
+        text-align: center;
+    }
+
+    .empty-address-icon {
+        font-size: 42px;
+        color: #94a3b8;
+        margin-bottom: 15px;
+    }
+
+    @media (max-width: 767px) {
+        .address-page {
+            padding: 25px 0 40px;
+        }
+
+        .profile-sidebar {
+            margin-bottom: 25px;
+        }
+
+        .address-heading {
+            font-size: 23px;
+        }
+    }
+</style>
+
+<div class="address-page">
+    <div class="container">
+
+        <!-- Page Heading -->
+        <div class="d-flex flex-wrap justify-content-between
+                    align-items-center gap-3 mb-4">
+
+            <div>
+                <p class="text-primary fw-semibold mb-2">
+                    MY ACCOUNT
+                </p>
+
+                <h2 class="address-heading mb-2">
+                    My Addresses
+                </h2>
+
+                <p class="address-subtitle mb-0">
+                    Manage and view your saved delivery addresses.
+                </p>
+            </div>
+
+            <div class="text-muted">
+                <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                Saved Locations
+            </div>
+
         </div>
-        <div class="col-sm-9 offset-sm-1">
-            <div class="row">
-                {% for ad in add %}
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Address: {{forloop.counter}}</h3>
-                            <p>Name: {{ad.name}}</p>
-                            <p>Division: {{ad.division}}</p>
-                            <p>District: {{ad.district}}</p>
-                            <p>Thana: {{ad.thana}}</p>
-                            <p>Villorroad: {{ad.villorroad}}</p>
-                            <p>Zipcode: {{ad.zipcode}}</p>
+
+        <div class="row g-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4">
+                <div class="profile-sidebar">
+
+                    <div class="mb-4 px-2">
+                        <small class="text-muted">SIGNED IN AS</small>
+                        <h6 class="fw-bold mt-2 mb-0 text-dark">
+                            {{ request.user }}
+                        </h6>
+                    </div>
+
+                    <a href="{% url 'profile' %}"
+                       class="sidebar-link">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+
+                    <a href="{% url 'address' %}"
+                       class="sidebar-link active">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>My Addresses</span>
+                    </a>
+
+                </div>
+            </div>
+
+            <!-- Address Content -->
+            <div class="col-lg-9 col-md-8">
+
+                <div class="d-flex justify-content-between
+                            align-items-center mb-4">
+
+                    <h5 class="fw-bold mb-0 text-dark">
+                        Saved Addresses
+                    </h5>
+
+                    <span class="badge rounded-pill bg-primary px-3 py-2">
+                        <i class="fas fa-map-pin me-1"></i>
+                        {{ add|length }} Saved
+                    </span>
+
+                </div>
+
+                <div class="row g-4">
+
+                    {% for ad in add %}
+
+                    <div class="col-xl-6 col-12">
+
+                        <div class="address-card">
+
+                            <div class="address-card-header">
+
+                                <div class="address-icon">
+                                    <i class="fas fa-home"></i>
+                                </div>
+
+                                <div>
+                                    <h5>
+                                        Address {{ forloop.counter }}
+                                    </h5>
+                                    <small>
+                                        <i class="fas fa-user me-1"></i>
+                                        {{ ad.name }}
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div class="address-details">
+
+                                <div class="address-detail">
+                                    <i class="fas fa-map detail-icon"></i>
+                                    <div>
+                                        <div class="detail-label">
+                                            Division
+                                        </div>
+                                        <div class="detail-value">
+                                            {{ ad.division|default:"Not provided" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-detail">
+                                    <i class="fas fa-city detail-icon"></i>
+                                    <div>
+                                        <div class="detail-label">
+                                            District
+                                        </div>
+                                        <div class="detail-value">
+                                            {{ ad.district|default:"Not provided" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-detail">
+                                    <i class="fas fa-location-arrow detail-icon"></i>
+                                    <div>
+                                        <div class="detail-label">
+                                            Thana / Upazila
+                                        </div>
+                                        <div class="detail-value">
+                                            {{ ad.thana|default:"Not provided" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-detail">
+                                    <i class="fas fa-road detail-icon"></i>
+                                    <div>
+                                        <div class="detail-label">
+                                            Village / Road
+                                        </div>
+                                        <div class="detail-value">
+                                            {{ ad.villorroad|default:"Not provided" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="address-detail">
+                                    <i class="fas fa-mail-bulk detail-icon"></i>
+                                    <div>
+                                        <div class="detail-label">
+                                            Postal Code
+                                        </div>
+                                        <div class="detail-value">
+                                            {{ ad.zipcode|default:"Not provided" }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {% empty %}
+
+                    <div class="col-12">
+                        <div class="empty-address">
+
+                            <div class="empty-address-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+
+                            <h5 class="fw-bold text-dark">
+                                No Addresses Found
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                You haven't saved any delivery
+                                addresses yet.
+                            </p>
 
                         </div>
                     </div>
+
+                    {% endfor %}
+
                 </div>
-                {% endfor %}
+
             </div>
+
         </div>
     </div>
 </div>
+
 {% endblock main-content %}
