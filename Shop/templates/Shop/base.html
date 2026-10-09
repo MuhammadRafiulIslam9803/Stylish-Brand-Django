@@ -84,6 +84,29 @@
                                 Delivery
                             </a>
                         </li>
+                        {% if user.is_authenticated %}
+                        {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold px-3"
+                                href="{% url 'store_admin_dashboard' %}">
+                                <i class="fas fa-store-alt me-1"></i>
+                                Store Admin
+                            </a>
+                        </li>
+                        {% else %}
+                        {% for group in user.groups.all %}
+                        {% if group.name == "Store Admin" %}
+                        <li class="nav-item">
+                            <a class="nav-link active fw-semibold px-3"
+                                href="{% url 'store_admin_dashboard' %}">
+                                <i class="fas fa-store-alt me-1"></i>
+                                Store Admin
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endif %}
 
                         <!-- Bridal Dropdown -->
                         <li class="nav-item dropdown">

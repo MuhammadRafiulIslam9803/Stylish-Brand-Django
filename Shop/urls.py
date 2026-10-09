@@ -121,4 +121,58 @@ urlpatterns = [
         views.gift_card_payment_cancel,
         name="gift_card_payment_cancel",
     ),
+    # admin panel urls
+    path("store-admin/", views.store_admin_dashboard, name="store_admin_dashboard"),
+    # stored admin
+    path("store-admin/products/", views.admin_product_list, name="admin_product_list"),
+    path(
+        "store-admin/products/add/", views.admin_product_add, name="admin_product_add"
+    ),
+    path(
+        "store-admin/products/<int:pk>/edit/",
+        views.admin_product_edit,
+        name="admin_product_edit",
+    ),
+    path(
+        "store-admin/products/",
+        views.admin_product_list,
+        name="admin_product_list",
+    ),
+    path(
+        "store-admin/products/add/",
+        views.admin_product_add,
+        name="admin_product_add",
+    ),
+    path(
+        "store-admin/products/<int:pk>/edit/",
+        views.admin_product_edit,
+        name="admin_product_edit",
+    ),
+    path(
+        "store-admin/products/<int:pk>/delete/",
+        views.admin_product_delete,
+        name="admin_product_delete",
+    ),
+    # admin order management
+    path(
+        "store-admin/orders/",
+        views.admin_order_list,
+        name="admin_order_list",
+    ),
+    path(
+        "store-admin/orders/<int:pk>/update-status/",
+        views.admin_order_update_status,
+        name="admin_order_update_status",
+    ),
+    # Customer admin management
+    path(
+        "store-admin/customers/",
+        views.admin_customer_list,
+        name="admin_customer_list",
+    ),
+    path(
+        "store-admin/customers/<int:pk>/orders/",
+        views.admin_customer_orders,
+        name="admin_customer_orders",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

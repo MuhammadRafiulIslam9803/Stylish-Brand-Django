@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth import password_validation
-from . models import Customer
+from . models import Customer, Product
 
 #Registration
 class CustomerRegistrationForm(UserCreationForm):
@@ -54,3 +54,49 @@ class CustomerProfileForm(forms.ModelForm):
         fields = ['name','division','district','thana','villorroad','zipcode']
         widgets = {'name':forms.TextInput(attrs={'class':'form-control'}), 'division':forms.Select(attrs={'class':'form-control'}), 'district':forms.TextInput(attrs={'class':'form-control'}), 'thana':forms.TextInput(attrs={'class':'form-control'}), 'villorroad':forms.TextInput(attrs={'class':'form-control'}), 'zipcode':forms.NumberInput(attrs={'class':'form-control'})} 
 
+
+
+# store admin form
+
+    
+
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            "title",
+            "selling_price",
+            "discounted_price",
+            "description",
+            "brand",
+            "category",
+            "product_image",
+        ]
+
+        widgets = {
+            "title": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter product name",
+            }),
+            "selling_price": forms.NumberInput(attrs={
+                "class": "form-control",
+            }),
+            "discounted_price": forms.NumberInput(attrs={
+                "class": "form-control",
+            }),
+            "description": forms.Textarea(attrs={
+                "class": "form-control",
+                "rows": 4,
+            }),
+            "brand": forms.TextInput(attrs={
+                "class": "form-control",
+                "placeholder": "Enter brand",
+            }),
+            "category": forms.Select(attrs={
+                "class": "form-select",
+            }),
+            "product_image": forms.ClearableFileInput(attrs={
+                "class": "form-control",
+            }),
+        }

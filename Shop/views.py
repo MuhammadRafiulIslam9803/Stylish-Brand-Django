@@ -1,10 +1,12 @@
 import logging
-
+from .decorators import store_admin_required
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 from django.shortcuts import render, redirect
 from .models import Customer, Product, Cart, OrderPlaced, GiftCard
 from django.views import View
-from .forms import CustomerRegistrationForm, CustomerProfileForm
+from .forms import CustomerRegistrationForm, CustomerProfileForm, ProductForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
@@ -856,3 +858,227 @@ def gift_card_payment_cancel(request):
         "PAYMENT_CANCELLED",
         tran_id,
     )
+
+
+
+
+# stored admin 
+
+
+
+@login_required
+@store_admin_required
+def store_admin_dashboard(request):
+    context = {
+        "total_products": Product.objects.count(),
+        "total_customers": Customer.objects.count(),
+        "total_orders": OrderPlaced.objects.count(),
+    }
+
+    return render(
+        request,
+        "Shop/admin_dashboard.html",
+        context,
+    )
+
+# Product Management - Store Admin
+
+
+
+
+@login_required
+@store_admin_required
+def admin_product_list(request):
+    products = Product.objects.all().order_by("-id")
+
+    search_query = request.GET.get("q", "").strip()
+
+    if search_query:
+        products = products.filter(
+            Q(title__icontains=search_query)
+            | Q(brand__icontains=search_query)
+        )
+
+    context = {
+        "products": products,
+        "search_query": search_query,
+    }
+
+    return render(request, "Shop/admin_product_list.html", context)
+
+
+@login_required
+@store_admin_required
+def admin_product_add(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Product added successfully!")
+            return redirect("admin_product_list")
+    else:
+        form = ProductForm()
+
+    return render(
+        request,
+        "Shop/admin_product_form.html",
+        {
+            "form": form,
+            "page_title": "Add New Product",
+            "button_text": "Add Product",
+        },
+    )
+
+
+@login_required
+@store_admin_required
+def admin_product_edit(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+
+    if request.method == "POST":
+        form = ProductForm(
+            request.POST,
+            request.FILES,
+            instance=product,
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Product updated successfully!")
+            return redirect("admin_product_list")
+    else:
+        form = ProductForm(instance=product)
+
+    return render(
+        request,
+        "Shop/admin_product_form.html",
+        {
+            "form": form,
+            "page_title": "Edit Product",
+            "button_text": "Save Changes",
+            "product": product,
+        },
+    )
+
+
+@login_required
+@store_admin_required
+def admin_product_delete(request, pk):
+    if request.method != "POST":
+        return redirect("admin_product_list")
+
+    product = get_object_or_404(Product, pk=pk)
+    product.delete()
+
+    messages.success(request, "Product deleted successfully!")
+    return redirect("admin_product_list")
+
+# admin order list management
+
+@login_required
+@store_admin_required
+def admin_order_list(request):
+    orders = OrderPlaced.objects.select_related(
+        "user", "customer", "product"
+    ).all().order_by("-ordered_date")
+
+    search_query = request.GET.get("q", "").strip()
+    status_filter = request.GET.get("status", "").strip()
+
+    if search_query:
+        orders = orders.filter(
+            Q(customer__name__icontains=search_query)
+            | Q(product__title__icontains=search_query)
+            | Q(tran_id__icontains=search_query)
+            | Q(user__username__icontains=search_query)
+        )
+
+    allowed_statuses = dict(
+        OrderPlaced._meta.get_field("status").choices
+    )
+
+    if status_filter in allowed_statuses:
+        orders = orders.filter(status=status_filter)
+
+    context = {
+        "orders": orders,
+        "search_query": search_query,
+        "status_filter": status_filter,
+        "status_choices": OrderPlaced._meta.get_field("status").choices,
+    }
+
+    return render(request, "Shop/admin_order_list.html", context)
+
+
+@login_required
+@store_admin_required
+def admin_order_update_status(request, pk):
+    if request.method != "POST":
+        return redirect("admin_order_list")
+
+    order = get_object_or_404(OrderPlaced, pk=pk)
+
+    new_status = request.POST.get("status", "").strip()
+
+    allowed_statuses = dict(
+        OrderPlaced._meta.get_field("status").choices
+    )
+
+    if new_status not in allowed_statuses:
+        messages.error(request, "Invalid order status.")
+        return redirect("admin_order_list")
+
+    order.status = new_status
+    order.save(update_fields=["status"])
+
+    messages.success(
+        request,
+        f"Order #{order.pk} status updated to {new_status}."
+    )
+
+    return redirect("admin_order_list")
+
+# admin customer list management
+
+@login_required
+@store_admin_required
+def admin_customer_list(request):
+    customers = Customer.objects.select_related(
+        "user"
+    ).all().order_by("-id")
+
+    search_query = request.GET.get("q", "").strip()
+
+    if search_query:
+        customers = customers.filter(
+            Q(name__icontains=search_query)
+            | Q(user__username__icontains=search_query)
+            | Q(district__icontains=search_query)
+            | Q(thana__icontains=search_query)
+            | Q(division__icontains=search_query)
+            | Q(villorroad__icontains=search_query)
+        )
+
+    return render(request, "Shop/admin_customer_list.html", {
+        "customers": customers,
+        "search_query": search_query,
+    })
+
+
+@login_required
+@store_admin_required
+def admin_customer_orders(request, pk):
+    customer = get_object_or_404(
+        Customer.objects.select_related("user"),
+        pk=pk,
+    )
+
+    orders = OrderPlaced.objects.filter(
+        customer=customer
+    ).select_related("product", "user").order_by("-ordered_date")
+
+    return render(request, "Shop/admin_customer_orders.html", {
+        "customer": customer,
+        "orders": orders,
+    })
