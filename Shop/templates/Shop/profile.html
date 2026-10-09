@@ -1,32 +1,316 @@
+
 {% extends 'Shop/base.html' %}
 {% load static %}
-{% block title %}Profile{% endblock title %}
+
+{% block title %}My Profile{% endblock title %}
+
 {% block main-content %}
-<div class="container my-5">
-    <div class="row">
-        <h3>Welcome <span class="text-capitalize">{{request.user}}</span></h3>
-        <div class="col-sm-2 border-end">
-            <ul class="list-unstyled">
-                <li class="d-grid"><a href="{% url 'profile' %}" class="btn {{active}}">Profile</a></li>
-                <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
-            </ul>
+
+<style>
+    .profile-page {
+        background: #f8fafc;
+        min-height: 75vh;
+        padding: 40px 0 60px;
+    }
+
+    .profile-heading {
+        color: #1e293b;
+        font-weight: 750;
+        letter-spacing: -0.5px;
+    }
+
+    .profile-subtitle {
+        color: #64748b;
+        font-size: 15px;
+    }
+
+    .profile-sidebar,
+    .profile-form-card {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        box-shadow: 0 4px 20px rgba(15, 23, 42, .04);
+    }
+
+    .profile-sidebar {
+        padding: 22px 16px;
+    }
+
+    .profile-avatar {
+        height: 64px;
+        width: 64px;
+        border-radius: 18px;
+        background: #eef2ff;
+        color: #4f46e5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 27px;
+        margin-bottom: 15px;
+    }
+
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 13px 14px;
+        margin-bottom: 8px;
+        color: #475569;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all .25s ease;
+    }
+
+    .sidebar-link:hover,
+    .sidebar-link.active {
+        background: #eef2ff;
+        color: #4f46e5;
+    }
+
+    .profile-form-card {
+        padding: 30px;
+    }
+
+    .profile-form-card h4 {
+        font-size: 21px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .profile-form-card .form-group {
+        margin-bottom: 20px;
+    }
+
+    .profile-form-card label {
+        display: block;
+        margin-bottom: 8px;
+        color: #334155;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .profile-form-card input,
+    .profile-form-card select,
+    .profile-form-card textarea {
+        width: 100%;
+        min-height: 45px;
+        padding: 10px 13px;
+        border: 1px solid #cbd5e1;
+        border-radius: 9px;
+        background: #fff;
+        color: #1e293b;
+        transition: border-color .2s, box-shadow .2s;
+    }
+
+    .profile-form-card input:focus,
+    .profile-form-card select:focus,
+    .profile-form-card textarea:focus {
+        border-color: #6366f1;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, .12);
+    }
+
+    .profile-form-card input[type="checkbox"],
+    .profile-form-card input[type="radio"] {
+        width: auto;
+        min-height: auto;
+    }
+
+    .profile-form-card .errorlist {
+        color: #dc2626;
+        font-size: 13px;
+        padding-left: 18px;
+        margin-top: 5px;
+    }
+
+    .save-profile-btn {
+        background: #4f46e5;
+        border: 1px solid #4f46e5;
+        color: #fff;
+        padding: 12px 25px;
+        border-radius: 9px;
+        font-weight: 600;
+        transition: all .2s ease;
+    }
+
+    .save-profile-btn:hover {
+        background: #4338ca;
+        border-color: #4338ca;
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 767px) {
+        .profile-page {
+            padding: 25px 0 40px;
+        }
+
+        .profile-sidebar {
+            margin-bottom: 22px;
+        }
+
+        .profile-form-card {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="profile-page">
+    <div class="container">
+
+        <!-- Page Heading -->
+        <div class="mb-4">
+            <p class="text-primary fw-semibold mb-2">
+                MY ACCOUNT
+            </p>
+
+            <h2 class="profile-heading mb-2">
+                My Profile
+            </h2>
+
+            <p class="profile-subtitle mb-0">
+                Manage your personal information and account details.
+            </p>
         </div>
-        <div class="col-sm-8 offset-sm-1">
-            <form action="" method="post">
-                {% csrf_token %}
-                {% for fm in form %}
-                <div class="form-group col-lg-6 mb-3">{{fm.label_tag}} {{fm}} <small class="text-danger">{{fm.errors|striptags}}</small></div>
-                {% endfor %}
-                <div class="col-12 mt-3">
-                    <button type="submit" class="btn btn-primary mb-3">Submit</button>
+
+        <div class="row g-4">
+
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4">
+                <div class="profile-sidebar">
+
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <p class="text-muted small mb-1">
+                        WELCOME BACK
+                    </p>
+
+                    <h5 class="fw-bold text-dark text-break mb-4">
+                        {{ request.user }}
+                    </h5>
+
+                    <a href="{% url 'profile' %}"
+                       class="sidebar-link active">
+                        <i class="fas fa-user-circle"></i>
+                        <span>My Profile</span>
+                    </a>
+
+                    <a href="{% url 'address' %}"
+                       class="sidebar-link">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <span>My Addresses</span>
+                    </a>
+
                 </div>
-            </form>
-            {% if messages %}
-            {% for message in messages %}
-            <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
-            {% endfor %}
-            {% endif %}
+            </div>
+
+            <!-- Profile Form -->
+            <div class="col-lg-9 col-md-8">
+                <div class="profile-form-card">
+
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="profile-avatar mb-0"
+                             style="width:48px;height:48px;font-size:20px;">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+
+                        <div>
+                            <h4 class="mb-1">
+                                Personal Information
+                            </h4>
+                            <p class="text-muted small mb-0">
+                                Update your details using the form below.
+                            </p>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4" style="border-color:#e2e8f0;">
+
+                    <!-- Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert
+                                {% if message.tags == 'error' %}
+                                    alert-danger
+                                {% elif message.tags == 'success' %}
+                                    alert-success
+                                {% elif message.tags == 'warning' %}
+                                    alert-warning
+                                {% else %}
+                                    alert-info
+                                {% endif %}
+                                alert-dismissible fade show"
+                                role="alert">
+
+                                {{ message }}
+
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="alert"
+                                        aria-label="Close">
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <div class="row">
+                            {% for fm in form %}
+                                <div class="col-lg-6 col-12 form-group">
+
+                                    {{ fm.label_tag }}
+
+                                    {{ fm }}
+
+                                    {% if fm.help_text %}
+                                        <small class="text-muted d-block mt-1">
+                                            {{ fm.help_text }}
+                                        </small>
+                                    {% endif %}
+
+                                    {% if fm.errors %}
+                                        <div class="text-danger small mt-1">
+                                            {{ fm.errors|striptags }}
+                                        </div>
+                                    {% endif %}
+
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex flex-wrap align-items-center
+                                    justify-content-between gap-3 mt-3">
+
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Keep your information up to date.
+                            </small>
+
+                            <button type="submit"
+                                    class="btn save-profile-btn">
+                                <i class="fas fa-save me-2"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+
 {% endblock main-content %}
