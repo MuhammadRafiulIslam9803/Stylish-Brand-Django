@@ -24,3 +24,21 @@ class CartModelAdmin(admin.ModelAdmin):
 class OrderPlacedModelAdmin(admin.ModelAdmin):
     list_display = ['id', 'user', 'customer','product','quantity','ordered_date','tran_id','status']
 
+
+# gift card admin
+from django.contrib import admin
+from .models import GiftCard
+
+@admin.register(GiftCard)
+class GiftCardAdmin(admin.ModelAdmin):
+    list_display = (
+        'code',
+        'user',
+        'amount',
+        'balance',
+        'is_paid',
+        'is_active',
+        'created_at',
+    )
+    search_fields = ('code', 'user__username')
+    list_filter = ('is_paid', 'is_active')

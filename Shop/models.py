@@ -3,15 +3,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 DIVISION_CHOICES = (
-    ('Dhaka','Dhaka'),
-    ('Rangpur','Rangpur'),
-    ('Rajshahi','Rajshahi'),
-    ('Khulna','Khulna'),
-    ('Barishal','Barishal'),
-    ('Chattogram','Chattogram'),
-    ('Mymenshing','Mymenshing'),
-    ('Sylhet','Sylhet'),
+    ("Dhaka", "Dhaka"),
+    ("Rangpur", "Rangpur"),
+    ("Rajshahi", "Rajshahi"),
+    ("Khulna", "Khulna"),
+    ("Barishal", "Barishal"),
+    ("Chattogram", "Chattogram"),
+    ("Mymenshing", "Mymenshing"),
+    ("Sylhet", "Sylhet"),
 )
+
 
 class Customer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -21,20 +22,19 @@ class Customer(models.Model):
     thana = models.CharField(max_length=50)
     villorroad = models.CharField(max_length=50)
     zipcode = models.IntegerField()
-    
 
     def __str__(self):
         return str(self.id)
-    
 
 
 CATEGORY_CHOICES = (
-    ('L', 'Lehenga'),
-    ('S', 'Saree'),
-    ('GP', 'Gents Pant'),
-    ('BK', 'Borkha'),
-    ('BF', 'Baby Fashion'),
+    ("L", "Lehenga"),
+    ("S", "Saree"),
+    ("GP", "Gents Pant"),
+    ("BK", "Borkha"),
+    ("BF", "Baby Fashion"),
 )
+
 
 class Product(models.Model):
     title = models.CharField(max_length=100)
@@ -42,8 +42,8 @@ class Product(models.Model):
     discounted_price = models.FloatField()
     description = models.TextField()
     brand = models.CharField(max_length=100)
-    category = models.CharField(choices=CATEGORY_CHOICES,max_length=2)
-    product_image = models.ImageField(upload_to='productimg')
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=2)
+    product_image = models.ImageField(upload_to="productimg")
 
     def __str__(self):
         return str(self.id)
@@ -56,20 +56,20 @@ class Cart(models.Model):
 
     def __str__(self):
         return str(self.id)
-    
+
     @property
     def total_cost(self):
         return self.quantity * self.product.discounted_price
 
 
-
 STATUS_CHOICE = (
-    ('Accepted','Accepted'),
-    ('Packed','Packed'),
-    ('On the Way', 'On the Way'),
-    ('Delivered','Delivered'),
-    ('Cancel','Cancel')
+    ("Accepted", "Accepted"),
+    ("Packed", "Packed"),
+    ("On the Way", "On the Way"),
+    ("Delivered", "Delivered"),
+    ("Cancel", "Cancel"),
 )
+
 
 class OrderPlaced(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -77,12 +77,27 @@ class OrderPlaced(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
     ordered_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50, choices=STATUS_CHOICE, default='Pending')
+    status = models.CharField(max_length=50, choices=STATUS_CHOICE, default="Pending")
     tran_id = models.CharField(max_length=100, blank=True, null=True)
-
 
     @property
     def total_cost(self):
         return self.quantity * self.product.discounted_price
 
 
+# for gift card model
+
+
+class GiftCard(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gift_cards")
+    code = models.CharField(max_length=20, unique=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    balance = models.DecimalField(max_digits=10, decimal_places=2)
+    is_paid = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    tran_id = models.CharField(max_length=100, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        return self.code

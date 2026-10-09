@@ -1,0 +1,57 @@
+
+{% extends 'Shop/base.html' %}
+{% load static %}
+
+{% block title %}Gift Cards{% endblock title %}
+
+{% block main-content %}
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">🎁 Gift Cards</h1>
+        <p class="text-muted">
+            Give your loved ones the freedom to choose!
+        </p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+
+        {% for amount in gift_amounts %}
+        <div class="col-md-4 col-sm-6">
+            <div class="card border-0 shadow h-100 text-center">
+                <div class="card-body p-4">
+
+                    <div class="display-4 mb-3">🎁</div>
+
+                    <h4 class="fw-bold">Gift Card</h4>
+
+                    <h2 class="text-primary fw-bold my-3">
+                        ৳{{ amount }}
+                    </h2>
+
+                    <p class="text-muted">
+                        A special gift for someone special.
+                    </p>
+
+                    <form method="post"
+                          action="{% url 'gift_card_buy' %}">
+                        {% csrf_token %}
+
+                        <input type="hidden"
+                               name="amount"
+                               value="{{ amount }}">
+
+                        <button type="submit"
+                                class="btn btn-primary w-100">
+                            Buy Gift Card
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock main-content %}

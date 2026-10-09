@@ -46,19 +46,14 @@ urlpatterns = [
     ),
     path("lehenga/", views.lehenga, name="lehenga"),
     path("lehenga/<str:data>", views.lehenga, name="lehengaitem"),
-    
     path("saree/", views.saree, name="saree"),
     path("saree/<str:data>", views.saree, name="sareeitem"),
-    
     path("gents-pant/", views.gents_pant, name="gents-pant"),
     path("gents-pant/<str:data>", views.gents_pant, name="gentspantitem"),
-    
     path("borkha/", views.borkha, name="borkha"),
     path("borkha/<str:data>", views.borkha, name="borkhaitem"),
-    
     path("baby-fashion/", views.baby_fashion, name="baby-fashion"),
     path("baby-fashion/<str:data>", views.baby_fashion, name="babyfashionitem"),
-    
     # path('login/', views.login, name='login'),
     path(
         "accounts/login/",
@@ -108,4 +103,22 @@ urlpatterns = [
     path("payment/success/", views.payment_success, name="payment_success"),
     path("payment/fail/", views.payment_fail, name="payment_fail"),
     path("payment/cancel/", views.payment_cancel, name="payment_cancel"),
+    # gift card urls
+    path("gift-cards/", views.gift_card_page, name="gift_card_page"),
+    path("gift-cards/buy/", views.gift_card_buy, name="gift_card_buy"),
+    path(
+        "gift-card/payment/success/",
+        views.gift_card_payment_success,
+        name="gift_card_payment_success",
+    ),
+    path(
+        "gift-card/payment/fail/",
+        views.gift_card_payment_fail,
+        name="gift_card_payment_fail",
+    ),
+    path(
+        "gift-card/payment/cancel/",
+        views.gift_card_payment_cancel,
+        name="gift_card_payment_cancel",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

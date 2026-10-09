@@ -1,0 +1,88 @@
+{% extends "Shop/base.html" %}
+{% load static %}
+
+{% block title %}Gift Card Payment Error{% endblock title %}
+
+{% block main-content %}
+
+<div class="container py-5">
+    <div class="card border-0 shadow-sm mx-auto"
+         style="max-width: 650px; border-radius: 18px; overflow: hidden;">
+
+        <!-- Error Header -->
+        <div class="text-center py-4 px-3"
+             style="background-color: #fff1f2;">
+
+            <div class="mx-auto mb-3 d-flex align-items-center justify-content-center"
+                 style="width: 75px; height: 75px; border-radius: 50%;
+                        background-color: #dc3545; color: white;
+                        font-size: 42px; font-weight: bold;">
+                !
+            </div>
+
+            <h2 class="text-danger fw-bold mb-2">
+                {{ error_title|default:"Payment Error" }}
+            </h2>
+
+            <p class="text-muted mb-0">
+                We could not complete your Gift Card request.
+            </p>
+        </div>
+
+        <!-- Error Details -->
+        <div class="card-body p-4 p-md-5">
+
+            <h5 class="fw-bold mb-3">
+                What went wrong?
+            </h5>
+
+            <div class="alert alert-danger" role="alert">
+                {{ error_message|default:"An unexpected error occurred." }}
+            </div>
+
+            {% if error_code %}
+                <p class="mb-3">
+                    <strong>Error type:</strong>
+                    {{ error_code }}
+                </p>
+            {% endif %}
+
+            <div class="alert alert-warning">
+                <strong>Important:</strong>
+                Your Gift Card has not been activated by this error
+                response. Please check your payment status before
+                trying again.
+            </div>
+
+            {% if transaction_id %}
+                <p class="text-muted small">
+                    <strong>Transaction ID:</strong>
+                    {{ transaction_id }}
+                </p>
+            {% endif %}
+
+            <h6 class="fw-bold mt-4">What can you do?</h6>
+
+            <ul class="text-muted">
+                <li>Check whether your payment was completed.</li>
+                <li>If money was deducted, verify the payment status before paying again.</li>
+                <li>If the problem continues, contact the store administrator.</li>
+            </ul>
+
+            <div class="d-flex flex-column flex-sm-row gap-2 mt-4">
+                <a href="{% url 'gift_card_page' %}"
+                   class="btn btn-danger flex-fill py-2">
+                    Try Again
+                </a>
+
+                <a href="{% url 'gift_card_page' %}"
+                   class="btn btn-outline-secondary flex-fill py-2">
+                    Back to Gift Cards
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}

@@ -1,5 +1,8 @@
+import logging
+
+
 from django.shortcuts import render, redirect
-from .models import Customer, Product, Cart, OrderPlaced
+from .models import Customer, Product, Cart, OrderPlaced, GiftCard
 from django.views import View
 from .forms import CustomerRegistrationForm, CustomerProfileForm
 from django.contrib import messages
@@ -18,6 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import uuid
 
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 # def home(request):
@@ -576,3 +580,279 @@ def payment_done(request):
         ).save()
         c.delete()
     return redirect("orders")
+
+
+# gift card
+@login_required
+def gift_card_page(request):
+    gift_amounts = [500, 1000, 2000]
+
+    return render(
+        request,
+        "Shop/gift_card.html",
+        {"gift_amounts": gift_amounts},
+    )
+
+
+@login_required
+def gift_card_buy(request):
+    if request.method != "POST":
+        return render_gift_card_error(
+            request,
+            "Invalid Request",
+            "Gift Card purchase must be submitted using the checkout form.",
+            "INVALID_REQUEST",
+        )
+
+    try:
+        amount = Decimal(request.POST.get("amount", "0"))
+
+        if amount not in [
+            Decimal("500"),
+            Decimal("1000"),
+            Decimal("2000"),
+        ]:
+            return render_gift_card_error(
+                request,
+                "Invalid Gift Card Amount",
+                "Please select one of the available amounts: ৳500, ৳1000, or ৳2000.",
+                "INVALID_AMOUNT",
+            )
+
+        customer = Customer.objects.filter(user=request.user).first()
+
+        if not customer:
+            return render_gift_card_error(
+                request,
+                "Customer Profile Missing",
+                "Please complete your customer profile before purchasing a Gift Card.",
+                "PROFILE_MISSING",
+            )
+
+        settings_dict = {
+            "store_id": settings.SSLCZ_STORE_ID,
+            "store_pass": settings.SSLCZ_STORE_PASS,
+            "issandbox": settings.SSLCZ_IS_SANDBOX,
+        }
+
+        sslcz = SSLCOMMERZ(settings_dict)
+
+        tran_id = f"GIFT-{request.user.id}-{uuid.uuid4().hex[:12].upper()}"
+
+        post_body = {
+            "total_amount": float(amount),
+            "currency": "BDT",
+            "tran_id": tran_id,
+            "success_url": request.build_absolute_uri(
+                reverse("gift_card_payment_success")
+            ),
+            "fail_url": request.build_absolute_uri(reverse("gift_card_payment_fail")),
+            "cancel_url": request.build_absolute_uri(
+                reverse("gift_card_payment_cancel")
+            ),
+            "emi_option": 0,
+            "cus_name": customer.name,
+            "cus_email": request.user.email or "customer@example.com",
+            "cus_phone": "01711111111",
+            "cus_add1": customer.villorroad,
+            "cus_city": customer.district,
+            "cus_country": "Bangladesh",
+            "shipping_method": "NO",
+            "num_of_item": 1,
+            "product_name": "Gift Card",
+            "product_category": "Gift Card",
+            "product_profile": "general",
+        }
+
+        pending_code = f"PENDING-{uuid.uuid4().hex[:12].upper()}"
+
+        gift_card = GiftCard.objects.create(
+            user=request.user,
+            code=pending_code,
+            amount=amount,
+            balance=amount,
+            is_paid=False,
+            is_active=False,
+            tran_id=tran_id,
+        )
+
+        response = sslcz.createSession(post_body)
+
+        if response.get("GatewayPageURL"):
+            return redirect(response["GatewayPageURL"])
+
+        return render_gift_card_error(
+            request,
+            "Payment Session Failed",
+            "The payment gateway did not provide a checkout URL. Your Gift Card remains inactive.",
+            "SESSION_CREATION_FAILED",
+            tran_id,
+        )
+
+    except (ValueError, TypeError, ArithmeticError):
+        return render_gift_card_error(
+            request,
+            "Invalid Gift Card Amount",
+            "The selected amount could not be processed. Please choose a valid Gift Card amount.",
+            "INVALID_AMOUNT",
+        )
+
+    except Exception:
+        logger.exception("Gift Card checkout session creation failed")
+
+        return render_gift_card_error(
+            request,
+            "Payment Processing Error",
+            "An unexpected error occurred while starting checkout. Check the payment status before trying again.",
+            "CHECKOUT_ERROR",
+        )
+
+
+@csrf_exempt
+def gift_card_payment_success(request):
+    val_id = request.POST.get("val_id") or request.GET.get("val_id")
+    callback_tran_id = request.POST.get("tran_id") or request.GET.get("tran_id")
+
+    if not val_id or not callback_tran_id:
+        return render_gift_card_error(
+            request,
+            "Payment Information Missing",
+            "The payment gateway did not return the required validation ID or transaction ID. Payment status could not be verified.",
+            "MISSING_PAYMENT_DATA",
+            callback_tran_id,
+        )
+
+    try:
+        gift_card = GiftCard.objects.get(tran_id=callback_tran_id)
+
+        if gift_card.is_paid and gift_card.is_active:
+            return render(
+                request,
+                "Shop/gift_card_success.html",
+                {"gift_card": gift_card},
+            )
+
+        settings_dict = {
+            "store_id": settings.SSLCZ_STORE_ID,
+            "store_pass": settings.SSLCZ_STORE_PASS,
+            "issandbox": settings.SSLCZ_IS_SANDBOX,
+        }
+
+        sslcz = SSLCOMMERZ(settings_dict)
+        validation = sslcz.validationTransactionOrder(val_id)
+
+        status = validation.get("status")
+        verified_tran_id = validation.get("tran_id")
+        verified_amount = Decimal(str(validation.get("amount", "0")))
+
+        if status not in ["VALID", "VALIDATED"]:
+            return render_gift_card_error(
+                request,
+                "Payment Verification Failed",
+                "The payment gateway did not confirm a valid transaction. Your Gift Card remains inactive.",
+                "INVALID_PAYMENT_STATUS",
+                callback_tran_id,
+            )
+
+        if verified_tran_id != gift_card.tran_id:
+            return render_gift_card_error(
+                request,
+                "Transaction ID Mismatch",
+                "The transaction ID returned by the gateway does not match the Gift Card purchase. The card has not been activated.",
+                "TRANSACTION_MISMATCH",
+                callback_tran_id,
+            )
+
+        if verified_amount != gift_card.amount:
+            return render_gift_card_error(
+                request,
+                "Payment Amount Mismatch",
+                "The amount confirmed by the payment gateway does not match the Gift Card amount. The card has not been activated.",
+                "AMOUNT_MISMATCH",
+                callback_tran_id,
+            )
+
+        gift_card.code = f"GIFT-{uuid.uuid4().hex[:12].upper()}"
+        gift_card.is_paid = True
+        gift_card.is_active = True
+        gift_card.balance = gift_card.amount
+
+        gift_card.save(
+            update_fields=[
+                "code",
+                "is_paid",
+                "is_active",
+                "balance",
+            ]
+        )
+
+        return render(
+            request,
+            "Shop/gift_card_success.html",
+            {"gift_card": gift_card},
+        )
+
+    except GiftCard.DoesNotExist:
+        return render_gift_card_error(
+            request,
+            "Gift Card Transaction Not Found",
+            "No pending Gift Card matches this transaction ID. The payment could not be linked to a Gift Card.",
+            "GIFT_CARD_NOT_FOUND",
+            callback_tran_id,
+        )
+
+    except Exception:
+        logger.exception("Gift Card payment verification failed")
+
+        return render_gift_card_error(
+            request,
+            "Payment Verification Error",
+            "An unexpected error occurred while verifying the payment. Your Gift Card has not been activated by this error handler. Check the server log and confirm payment status before retrying.",
+            "VERIFICATION_ERROR",
+            callback_tran_id,
+        )
+
+
+def render_gift_card_error(
+    request,
+    title,
+    message,
+    error_code="GIFT_CARD_ERROR",
+    transaction_id=None,
+):
+    return render(
+        request,
+        "Shop/gift_card_error.html",
+        {
+            "error_title": title,
+            "error_message": message,
+            "error_code": error_code,
+            "transaction_id": transaction_id,
+        },
+    )
+
+
+@csrf_exempt
+def gift_card_payment_fail(request):
+    tran_id = request.POST.get("tran_id") or request.GET.get("tran_id")
+
+    return render_gift_card_error(
+        request,
+        "Gift Card Payment Failed",
+        "The payment gateway returned a failed payment result. Your Gift Card has not been activated. If money was deducted, confirm the transaction status before trying again.",
+        "PAYMENT_FAILED",
+        tran_id,
+    )
+
+
+@csrf_exempt
+def gift_card_payment_cancel(request):
+    tran_id = request.POST.get("tran_id") or request.GET.get("tran_id")
+
+    return render_gift_card_error(
+        request,
+        "Payment Cancelled",
+        "The Gift Card payment process was cancelled. No Gift Card was activated by this cancellation response.",
+        "PAYMENT_CANCELLED",
+        tran_id,
+    )
