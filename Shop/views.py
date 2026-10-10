@@ -78,7 +78,7 @@ class ProductDetailView(View):
             },
         )
 
-
+@login_required
 def add_to_cart(request):
     user = request.user
     product_id = request.GET.get("prod_id")
@@ -398,11 +398,29 @@ def remove_cart(request):
 @login_required
 def initiate_payment(request):
     if request.method == "POST":
-        custid = request.POST.get("custid")
-        customer = Customer.objects.get(id=custid)
+        # custid = request.POST.get("custid")
+        # customer = Customer.objects.get(id=custid)
+        # user = request.user
         user = request.user
         cart_items = Cart.objects.filter(user=user)
+        custid = request.POST.get("custid")
 
+        # handle error when adress is missing 
+        try:
+            if custid:
+                customer = Customer.objects.get(
+                    id=custid,
+                    user=user
+                )
+            else:
+                customer = Customer.objects.get(user=user)
+
+        except Customer.DoesNotExist:
+            messages.warning(
+                request,
+                "Please complete your profile and address before payment."
+            )
+            return redirect("profile")
         # Calculate total
         amount = 0
         shipping_amount = 100

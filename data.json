@@ -1,0 +1,1285 @@
+[
+{
+  "model": "auth.group",
+  "fields": {
+    "name": "Store Admin",
+    "permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$jiG5GhjLLgxNofCBxQX3eG$jQEoa/3kLVSztn0agre3z+WX/7OrRq77c8PwTGIh6GA=",
+    "last_login": "2026-10-07T07:33:50.344Z",
+    "is_superuser": true,
+    "username": "Rafiul",
+    "first_name": "",
+    "last_name": "",
+    "email": "rafiul@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-10-07T07:29:46.623Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Nr3yMklIjELYThrru49Prh$UDPl7/y5rmOOcJ8D+ieqWiUa15s4effNt/zK3H9MEZo=",
+    "last_login": "2026-10-07T07:31:28.398Z",
+    "is_superuser": false,
+    "username": "Himadro",
+    "first_name": "",
+    "last_name": "",
+    "email": "himadro@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-07T07:31:18.127Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$zFK0XjZaVnK8Bw9xgKtxXq$ZZoByfT+kdDJO6Aysn6i7sX6eZvoXbh9fIMfIyZ4I4M=",
+    "last_login": "2026-10-09T15:39:19.242Z",
+    "is_superuser": false,
+    "username": "Riham",
+    "first_name": "",
+    "last_name": "",
+    "email": "riham@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-09T06:43:56Z",
+    "groups": [
+      [
+        "Store Admin"
+      ]
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$K9UdTT3LVDfbCSBg4PH7v2$U4H450OxDOsfxWg8E/0amAQESlqkjyR9ajMNchnZ3Vs=",
+    "last_login": "2026-10-09T15:34:12.971Z",
+    "is_superuser": false,
+    "username": "Adnan",
+    "first_name": "",
+    "last_name": "",
+    "email": "adnan@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-10-09T15:33:59.165Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "7sfl83n8t76npm366ymps2a3tv2ryt2v",
+  "fields": {
+    "session_data": ".eJxVjLsKwzAMAP9FczEyfijK2L3fYCw5btKWBOJkKv33EsjQrnfHvSHlfRvT3oY1TQV6sHD5ZZL1OcyHKI883xejy7ytk5gjMadt5raU4XU927_BmNsIPUQJ3oYYuCOUrpLzrGi1hIzeY1V04ohdjNUzS61OqxcMkYjZKiF8vrZxNsk:1xEM9u:ObT9mYg1fp5aDVCo8rA2DFNJdYOOT0Mq-O12qNkDH0s",
+    "expire_date": "2026-10-21T07:33:50.380Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "f6u82k037ki8vzm813scplrtq3ynnrhu",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQAP-yZ0OAQoEevfcNZGFXqRpISnsy_t006UGvM5N5Q8R9K3HvvMaFYIIBLr8sYX5yPQQ9sN6byK1u65LEkYjTdjE34tf1bP8GBXuBCaQ1KAeSLDEnQ15SUKj0gDmlnI1LiqwembxlNXrjyQevnAmaEW-oHXy-7jY4Hg:1xFCgp:fgsn6dPtN_8QVFKrEPybExAczGiaa5O_jZ6mzJV50xo",
+    "expire_date": "2026-10-23T15:39:19.276Z"
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "Himadro"
+    ],
+    "name": "Himardo Islam",
+    "division": "Chattogram",
+    "district": "Bagerhat",
+    "thana": "Jani na",
+    "villorroad": "45623",
+    "zipcode": 4561
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "name": "Rafiul Islam",
+    "division": "Dhaka",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Baravhita",
+    "zipcode": 5680
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "name": "Rafiul Islam",
+    "division": "Rangpur",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Baravhita",
+    "zipcode": 5680
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "name": "Riham",
+    "division": "Rangpur",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Barabhita",
+    "zipcode": 5682
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "name": "Aronee ayub",
+    "division": "Rangpur",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Barabhita",
+    "zipcode": 5680
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "name": "Rafiul Islam",
+    "division": "Rangpur",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Barabhita",
+    "zipcode": 5680
+  }
+},
+{
+  "model": "Shop.customer",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "Adnan"
+    ],
+    "name": "Adnan Ahmed",
+    "division": "Rangpur",
+    "district": "Kurigram",
+    "thana": "Phulbari",
+    "villorroad": "Barabhita",
+    "zipcode": 5680
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 1,
+  "fields": {
+    "title": "Royal Red Bridal Lehenga",
+    "selling_price": 18500.0,
+    "discounted_price": 15999.0,
+    "description": "A stunning royal red bridal lehenga featuring elegant embroidery and beautiful traditional detailing. Perfect for weddings, receptions and special occasions.",
+    "brand": "Aarong",
+    "category": "L",
+    "product_image": "productimg/lehenga-01.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 2,
+  "fields": {
+    "title": "Golden Embroidered Bridal Lehenga",
+    "selling_price": 22000.0,
+    "discounted_price": 18999.0,
+    "description": "Premium golden embroidered bridal lehenga designed with intricate patterns and a luxurious finish for an elegant bridal appearance.",
+    "brand": "Rang",
+    "category": "L",
+    "product_image": "productimg/lehenga-02.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 3,
+  "fields": {
+    "title": "Pink Designer Party Lehenga",
+    "selling_price": 14500.0,
+    "discounted_price": 11999.0,
+    "description": "Beautiful pink designer lehenga with stylish embroidery and a comfortable fit. Perfect for weddings, parties and festive occasions.",
+    "brand": "Kay Kraft",
+    "category": "L",
+    "product_image": "productimg/lehenga-03.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 4,
+  "fields": {
+    "title": "Maroon Velvet Bridal Lehenga",
+    "selling_price": 25000.0,
+    "discounted_price": 21999.0,
+    "description": "Luxurious maroon velvet bridal lehenga with premium detailing and elegant embroidery, perfect for a glamorous wedding look.",
+    "brand": "Sailor",
+    "category": "L",
+    "product_image": "productimg/lehenga-04.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 5,
+  "fields": {
+    "title": "Blue Stone Work Lehenga",
+    "selling_price": 16500.0,
+    "discounted_price": 13999.0,
+    "description": "Elegant blue lehenga featuring beautiful stone work and stylish embroidery, designed for parties and special celebrations.",
+    "brand": "Yellow",
+    "category": "L",
+    "product_image": "productimg/lehenga-05.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 6,
+  "fields": {
+    "title": "Premium Red Jamdani Saree",
+    "selling_price": 8500.0,
+    "discounted_price": 6999.0,
+    "description": "Elegant red Jamdani saree featuring traditional patterns and a premium finish. Perfect for weddings and festive occasions.",
+    "brand": "Aarong",
+    "category": "S",
+    "product_image": "productimg/saree-01.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 7,
+  "fields": {
+    "title": "Black & Gold Silk Saree",
+    "selling_price": 7200.0,
+    "discounted_price": 5999.0,
+    "description": "Premium black silk saree with beautiful golden detailing for a sophisticated and elegant traditional look.",
+    "brand": "Rang",
+    "category": "S",
+    "product_image": "productimg/saree-02.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 8,
+  "fields": {
+    "title": "Pink Embroidered Saree",
+    "selling_price": 6500.0,
+    "discounted_price": 5299.0,
+    "description": "Stylish pink saree with delicate embroidery and a comfortable fabric, perfect for parties and celebrations.",
+    "brand": "Kay Kraft",
+    "category": "S",
+    "product_image": "productimg/saree-03.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 9,
+  "fields": {
+    "title": "Blue Tangail Cotton Saree",
+    "selling_price": 4800.0,
+    "discounted_price": 3999.0,
+    "description": "Comfortable blue Tangail cotton saree with traditional design, perfect for everyday and festive wear.",
+    "brand": "Aarong",
+    "category": "S",
+    "product_image": "productimg/saree-04.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 10,
+  "fields": {
+    "title": "Green Banarasi Silk Saree",
+    "selling_price": 9500.0,
+    "discounted_price": 7999.0,
+    "description": "Premium green Banarasi silk saree featuring elegant traditional patterns and a luxurious finish.",
+    "brand": "Rang",
+    "category": "S",
+    "product_image": "productimg/saree-05.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 11,
+  "fields": {
+    "title": "Men's Premium Slim Fit Black Pant",
+    "selling_price": 2800.0,
+    "discounted_price": 2299.0,
+    "description": "Premium slim-fit black pant made for a modern and stylish appearance. Perfect for office, formal events and casual occasions.",
+    "brand": "Yellow",
+    "category": "GP",
+    "product_image": "productimg/gents-pant-01.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 12,
+  "fields": {
+    "title": "Classic Navy Blue Formal Pant",
+    "selling_price": 3200.0,
+    "discounted_price": 2699.0,
+    "description": "Classic navy blue formal pant with a comfortable fit and sophisticated design, perfect for professional and formal wear.",
+    "brand": "Sailor",
+    "category": "GP",
+    "product_image": "productimg/gents-pant-02.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 13,
+  "fields": {
+    "title": "Men's Regular Fit Cotton Pant",
+    "selling_price": 2400.0,
+    "discounted_price": 1999.0,
+    "description": "Comfortable regular-fit cotton pant designed for everyday use with a clean and modern look.",
+    "brand": "Ecstasy",
+    "category": "GP",
+    "product_image": "productimg/gents-pant-03.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 14,
+  "fields": {
+    "title": "Men's Dark Grey Chino Pant",
+    "selling_price": 2600.0,
+    "discounted_price": 2199.0,
+    "description": "Stylish dark grey chino pant made with comfortable fabric and a modern fit, perfect for casual and smart-casual outfits.",
+    "brand": "Apex",
+    "category": "GP",
+    "product_image": "productimg/gents-pant-04.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 15,
+  "fields": {
+    "title": "Men's Beige Casual Chino Pant",
+    "selling_price": 2500.0,
+    "discounted_price": 2099.0,
+    "description": "Comfortable beige chino pant with a versatile design that works perfectly with shirts, polos and casual outfits.",
+    "brand": "Yellow",
+    "category": "GP",
+    "product_image": "productimg/gents-pant-05.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 16,
+  "fields": {
+    "title": "Premium Black Embroidered Borkha",
+    "selling_price": 4800.0,
+    "discounted_price": 3999.0,
+    "description": "Elegant black embroidered borkha with beautiful detailing and a comfortable design, suitable for everyday and special occasions.",
+    "brand": "Rang",
+    "category": "BK",
+    "product_image": "productimg/borkha-01..jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 17,
+  "fields": {
+    "title": "Elegant Navy Blue Borkha",
+    "selling_price": 4200.0,
+    "discounted_price": 3499.0,
+    "description": "Stylish navy blue borkha featuring an elegant design and comfortable fabric for a graceful modest look.",
+    "brand": "Aarong",
+    "category": "BK",
+    "product_image": "productimg/borkha-02.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 18,
+  "fields": {
+    "title": "Stone Work Party Borkha",
+    "selling_price": 6500.0,
+    "discounted_price": 5499.0,
+    "description": "Premium party borkha decorated with beautiful stone work and elegant detailing, perfect for special occasions.",
+    "brand": "Kay Kraft",
+    "category": "BK",
+    "product_image": "productimg/borkha-03.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 19,
+  "fields": {
+    "title": "Premium Dubai Style Borkha",
+    "selling_price": 5500.0,
+    "discounted_price": 4599.0,
+    "description": "Modern Dubai-style borkha with a sophisticated design and premium finishing for an elegant modest fashion look.",
+    "brand": "Rang",
+    "category": "BK",
+    "product_image": "productimg/borkha-04.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 20,
+  "fields": {
+    "title": "Simple Everyday Black Borkha",
+    "selling_price": 2800.0,
+    "discounted_price": 2299.0,
+    "description": "Comfortable and simple black borkha designed for everyday use with a clean and elegant appearance.",
+    "brand": "Aarong",
+    "category": "BK",
+    "product_image": "productimg/borkha-05.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 21,
+  "fields": {
+    "title": "Baby Girl Princess Party Dress",
+    "selling_price": 2200.0,
+    "discounted_price": 1799.0,
+    "description": "Adorable princess-style party dress designed for baby girls with a beautiful design and comfortable fabric.",
+    "brand": "Aarong",
+    "category": "BF",
+    "product_image": "productimg/baby-fashion-01.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 22,
+  "fields": {
+    "title": "Baby Boy Cotton Casual Set",
+    "selling_price": 1600.0,
+    "discounted_price": 1299.0,
+    "description": "Comfortable cotton casual outfit for baby boys, perfect for everyday wear and outdoor activities.",
+    "brand": "Sailor",
+    "category": "BF",
+    "product_image": "productimg/baby-fashion-02.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 23,
+  "fields": {
+    "title": "Baby Girl Floral Frock",
+    "selling_price": 1800.0,
+    "discounted_price": 1499.0,
+    "description": "Comfortable regular-fit cotton pant designed for everyday use with a clean and modern look.",
+    "brand": "Aarong",
+    "category": "BF",
+    "product_image": "productimg/baby-fashion-03.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 24,
+  "fields": {
+    "title": "Baby Boy Premium Kurta Set",
+    "selling_price": 2000.0,
+    "discounted_price": 1699.0,
+    "description": "Stylish dark grey chino pant made with comfortable fabric and a modern fit, perfect for casual and smart-casual outfits.",
+    "brand": "Kay Kraft",
+    "category": "BF",
+    "product_image": "productimg/baby-fashion-04.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 25,
+  "fields": {
+    "title": "Baby Girls Embroidered Dress",
+    "selling_price": 2500.0,
+    "discounted_price": 2099.0,
+    "description": "Beautiful embroidered dress for baby girls with elegant detailing and soft comfortable fabric.",
+    "brand": "Rang",
+    "category": "BF",
+    "product_image": "productimg/baby-fashion-05.jpg"
+  }
+},
+{
+  "model": "Shop.product",
+  "pk": 26,
+  "fields": {
+    "title": "Standard Borka Reboand",
+    "selling_price": 26500.0,
+    "discounted_price": 24500.0,
+    "description": "Elegant black embroidered borkha with beautiful detailing and a comfortable design, suitable for everyday and special occasions.",
+    "brand": "Rang",
+    "category": "BK",
+    "product_image": "productimg/borkha-06.jpg"
+  }
+},
+{
+  "model": "Shop.cart",
+  "pk": 26,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "product": 14,
+    "quantity": 1
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "customer": 2,
+    "product": 17,
+    "quantity": 2,
+    "ordered_date": "2026-10-08T11:27:14.536Z",
+    "status": "Accepted",
+    "tran_id": "ORDER-1-2-20261008172654-1790"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "customer": 2,
+    "product": 14,
+    "quantity": 4,
+    "ordered_date": "2026-10-08T11:27:15.026Z",
+    "status": "Packed",
+    "tran_id": "ORDER-1-2-20261008172654-1790"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "Rafiul"
+    ],
+    "customer": 2,
+    "product": 25,
+    "quantity": 3,
+    "ordered_date": "2026-10-08T11:27:15.095Z",
+    "status": "Pending",
+    "tran_id": "ORDER-1-2-20261008172654-1790"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "customer": 4,
+    "product": 13,
+    "quantity": 2,
+    "ordered_date": "2026-10-09T06:55:33.153Z",
+    "status": "Pending",
+    "tran_id": "ORDER-3-4-20261009125508-CE46"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "customer": 5,
+    "product": 4,
+    "quantity": 3,
+    "ordered_date": "2026-10-09T07:18:59.963Z",
+    "status": "Pending",
+    "tran_id": "ORDER-3-5-20261009131848-C07F"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "customer": 4,
+    "product": 12,
+    "quantity": 1,
+    "ordered_date": "2026-10-09T13:29:08.056Z",
+    "status": "Pending",
+    "tran_id": "ORDER-3-4-20261009192853-B328"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "customer": 5,
+    "product": 12,
+    "quantity": 1,
+    "ordered_date": "2026-10-09T14:36:27.454Z",
+    "status": "Delivered",
+    "tran_id": "ORDER-3-5-20261009203614-3282"
+  }
+},
+{
+  "model": "Shop.orderplaced",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "Adnan"
+    ],
+    "customer": 7,
+    "product": 12,
+    "quantity": 1,
+    "ordered_date": "2026-10-09T15:35:03.262Z",
+    "status": "Accepted",
+    "tran_id": "ORDER-4-7-20261009213452-7813"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "PENDING-FEE733FEC11A",
+    "amount": "500.00",
+    "balance": "500.00",
+    "is_paid": false,
+    "is_active": false,
+    "created_at": "2026-10-09T13:35:44.465Z",
+    "tran_id": "GIFT-3-B0D041297453"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "PENDING-C5BC3140FACF",
+    "amount": "1000.00",
+    "balance": "1000.00",
+    "is_paid": false,
+    "is_active": false,
+    "created_at": "2026-10-09T13:54:28.134Z",
+    "tran_id": "GIFT-3-B8D61CC66F42"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "PENDING-1F61102B5AC0",
+    "amount": "2000.00",
+    "balance": "2000.00",
+    "is_paid": false,
+    "is_active": false,
+    "created_at": "2026-10-09T13:56:48.015Z",
+    "tran_id": "GIFT-3-17F3065404A2"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "PENDING-6E8DEF49EF07",
+    "amount": "1000.00",
+    "balance": "1000.00",
+    "is_paid": false,
+    "is_active": false,
+    "created_at": "2026-10-09T13:57:10.598Z",
+    "tran_id": "GIFT-3-2E554276D0DE"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "GIFT-E151B9D210D1",
+    "amount": "1000.00",
+    "balance": "1000.00",
+    "is_paid": true,
+    "is_active": true,
+    "created_at": "2026-10-09T14:05:35.791Z",
+    "tran_id": "GIFT-3-D76E9CF706F5"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "GIFT-D6016367428D",
+    "amount": "1000.00",
+    "balance": "1000.00",
+    "is_paid": true,
+    "is_active": true,
+    "created_at": "2026-10-09T14:15:14.831Z",
+    "tran_id": "GIFT-3-82FC1F22503A"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "GIFT-1B0ED2AC3C00",
+    "amount": "500.00",
+    "balance": "500.00",
+    "is_paid": true,
+    "is_active": true,
+    "created_at": "2026-10-09T14:34:06.254Z",
+    "tran_id": "GIFT-3-B33AE43DFA5A"
+  }
+},
+{
+  "model": "Shop.giftcard",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "Riham"
+    ],
+    "code": "PENDING-30C490160FA4",
+    "amount": "1000.00",
+    "balance": "1000.00",
+    "is_paid": false,
+    "is_active": false,
+    "created_at": "2026-10-09T14:34:24.017Z",
+    "tran_id": "GIFT-3-86FC4F9F3CCF"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2026-10-08T07:36:21.878Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "1",
+    "object_repr": "1",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2026-10-08T07:37:25.048Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "2",
+    "object_repr": "2",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2026-10-08T07:38:21.919Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "3",
+    "object_repr": "3",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2026-10-08T07:39:23.202Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "4",
+    "object_repr": "4",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2026-10-08T07:40:35.230Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "5",
+    "object_repr": "5",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2026-10-08T07:41:39.138Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "6",
+    "object_repr": "6",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2026-10-08T07:42:40.666Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "7",
+    "object_repr": "7",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2026-10-08T07:46:18.485Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "8",
+    "object_repr": "8",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2026-10-08T07:47:18.528Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "9",
+    "object_repr": "9",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2026-10-08T07:48:27.340Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "10",
+    "object_repr": "10",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2026-10-08T07:49:28.764Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "11",
+    "object_repr": "11",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2026-10-08T07:50:26.985Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "12",
+    "object_repr": "12",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2026-10-08T07:51:21.850Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "13",
+    "object_repr": "13",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2026-10-08T07:52:13.107Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "14",
+    "object_repr": "14",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2026-10-08T07:53:04.898Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "15",
+    "object_repr": "15",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2026-10-08T07:54:04.249Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "16",
+    "object_repr": "16",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2026-10-08T07:55:32.371Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "17",
+    "object_repr": "17",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2026-10-08T07:56:28.220Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "18",
+    "object_repr": "18",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2026-10-08T07:57:33.174Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "19",
+    "object_repr": "19",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2026-10-08T07:58:31.165Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "20",
+    "object_repr": "20",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2026-10-08T07:59:28.185Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "21",
+    "object_repr": "21",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2026-10-08T08:00:30.880Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "22",
+    "object_repr": "22",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2026-10-08T08:01:18.757Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "23",
+    "object_repr": "23",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2026-10-08T08:02:16.123Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "24",
+    "object_repr": "24",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2026-10-08T08:03:03.174Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "Shop",
+      "product"
+    ],
+    "object_id": "25",
+    "object_repr": "25",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2026-10-09T15:00:39.189Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "object_id": "1",
+    "object_repr": "Store Admin",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 27,
+  "fields": {
+    "action_time": "2026-10-09T15:02:44.558Z",
+    "user": [
+      "Rafiul"
+    ],
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "object_id": "3",
+    "object_repr": "Riham",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Groups\"]}}]"
+  }
+}
+]
