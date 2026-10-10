@@ -1,14 +1,62 @@
 {% extends 'Shop/base.html' %}
 {% load static %}
-{% block title %}Empty Cart {% endblock title %}
-{% block main-content %}
-<div class="container my-5">
-    <div class="row">
-        <h3 class="text-center">You have no product in your cart</h3>
-        <div class="text-center">
-            <img src="{% static 'Shop/images/emptycart.png' %}" alt="" class="img-fluid img-thumbnail w-25">
-        </div>
 
+{% block title %}Empty Cart{% endblock title %}
+
+{% block main-content %}
+
+<div class="container my-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-7">
+
+            <div class="card border-0 shadow-lg rounded-4 text-center p-4 p-md-5">
+
+                <!-- Empty Cart Image -->
+                <div class="mb-4">
+                    <img
+                        src="{% static 'Shop/images/emptycart.png' %}"
+                        alt="Empty Shopping Cart"
+                        class="img-fluid"
+                        style="max-width: 230px; width: 100%;"
+                    >
+                </div>
+
+                <!-- Heading -->
+                <h2 class="fw-bold text-dark mb-3">
+                    Your Cart is Empty!
+                </h2>
+
+                <!-- Description -->
+                <p class="text-secondary mb-4">
+                    Looks like you haven't added anything to your cart yet.
+                    Explore our collection and find something you love!
+                </p>
+
+                <!-- Continue Shopping Button -->
+                <div>
+                    <a href="{% url 'home' %}"
+                       class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-semibold shadow-sm">
+
+                        <i class="fas fa-shopping-bag me-2"></i>
+                        Continue Shopping
+
+                    </a>
+                </div>
+
+                <!-- Footer Text -->
+                <div class="mt-4">
+                    <small class="text-muted">
+                        <i class="fas fa-heart text-danger me-1"></i>
+                        Happy Shopping!
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
     </div>
+
 </div>
+
 {% endblock main-content %}
