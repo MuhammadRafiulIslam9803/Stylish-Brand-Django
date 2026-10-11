@@ -1,4 +1,4 @@
-{% extends 'Shop/base.html' %}
+﻿{% extends 'Shop/base.html' %}
 {% load static %}
 {% block title %}Cart{% endblock title %}
 {% block main-content %}
@@ -21,7 +21,7 @@
                     <div
                         class="row cart-item p-3 mb-3 bg-light rounded-4 border">
                         <div class="col-sm-3 text-center align-self-center"><img
-                                src="{{cart.product.product_image.url}}" alt
+                                src="{% static cart.product.product_image.name %}" alt
                                 srcset
                                 class="img-fluid rounded-4 shadow-sm border border-3 border-white"
                                 height="150" width="150"> </div>

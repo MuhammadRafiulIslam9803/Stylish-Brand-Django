@@ -1,4 +1,4 @@
-
+﻿
 {% extends 'Shop/base.html' %}
 {% load static %}
 
@@ -383,7 +383,7 @@
 
                     <div class="position-relative bg-light">
 
-                        <img src="{{g.product_image.url}}"
+                        <img src="{% static g.product_image.name %}"
                             class="card-img-top"
                             style="height: 240px; object-fit: contain;"
                             alt="{{g.title}}">
@@ -466,7 +466,7 @@
 
                     <div class="bg-light">
 
-                        <img src="{{b.product_image.url}}"
+                        <img src="{% static b.product_image.name %}"
                             class="card-img-top"
                             style="height: 240px; object-fit: contain;"
                             alt="{{b.title}}">
@@ -587,7 +587,7 @@
 
                     <div class="bg-light">
 
-                        <img src="{{bh.product_image.url}}"
+                        <img src="{% static bh.product_image.name %}"
                             class="card-img-top"
                             style="height: 240px; object-fit: contain;"
                             alt="{{bh.title}}">
@@ -656,7 +656,7 @@
 
                 <div class="bg-light">
 
-                    <img src="{{ lh.product_image.url }}"
+                    <img src="{% static lh.product_image.name %}"
                         class="card-img-top"
                         style="height: 240px; object-fit: contain;"
                         alt="{{ lh.title }}">
@@ -733,7 +733,7 @@
 
                     <div class="bg-light">
 
-                        <img src="{{sr.product_image.url}}"
+                        <img src="{% static sr.product_image.name %}"
                             class="card-img-top"
                             style="height: 240px; object-fit: contain;"
                             alt="{{sr.title}}">
@@ -874,3 +874,4 @@
 </div>
 
 {% endblock main-content %}
+

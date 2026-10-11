@@ -1,4 +1,4 @@
-
+﻿
 {% extends 'Shop/base.html' %}
 {% load static %}
 
@@ -300,13 +300,13 @@
 
                     <a href="{% url 'lehengaitem' 'below' %}"
                        class="filter-link">
-                        <span>Below ৳20,000</span>
+                        <span>Below à§³20,000</span>
                         <span class="arrow">&rsaquo;</span>
                     </a>
 
                     <a href="{% url 'lehengaitem' 'above' %}"
                        class="filter-link">
-                        <span>Above ৳20,000</span>
+                        <span>Above à§³20,000</span>
                         <span class="arrow">&rsaquo;</span>
                     </a>
 
@@ -336,7 +336,7 @@
                                 <div class="product-image">
 
                                     <img
-                                        src="{{ product.product_image.url }}"
+                                        src="{% static product.product_image.name %}"
                                         alt="{{ product.title }}"
                                         loading="lazy">
 
@@ -354,11 +354,11 @@
 
                                     <div>
                                         <span class="product-price">
-                                            ৳{{ product.discounted_price }}
+                                            à§³{{ product.discounted_price }}
                                         </span>
 
                                         <span class="old-price">
-                                            ৳{{ product.selling_price }}
+                                            à§³{{ product.selling_price }}
                                         </span>
                                     </div>
 
@@ -400,3 +400,4 @@
 </section>
 
 {% endblock main-content %}
+

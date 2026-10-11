@@ -1,4 +1,4 @@
-
+﻿
 {% extends 'Shop/base.html' %}
 {% load static %}
 
@@ -407,7 +407,7 @@
                                 <div class="col-sm-4 col-lg-3 text-center">
                                     {% if op.product.product_image %}
                                         <img
-                                            src="{{ op.product.product_image.url }}"
+                                            src="{% static op.product.product_image.name %}"
                                             alt="{{ op.product.title }}"
                                             class="order-product-image">
                                     {% else %}
@@ -443,7 +443,7 @@
                                         </div>
                                         <div class="order-meta-value
                                                     text-primary fs-5">
-                                            ৳{{ op.total_cost }}
+                                            à§³{{ op.total_cost }}
                                         </div>
                                     </div>
 

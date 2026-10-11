@@ -1,3 +1,4 @@
+﻿{% load static %}
 {% extends 'Shop/base.html' %}
 
 {% block title %}Product Management{% endblock title %}
@@ -66,7 +67,7 @@
 
                     <td>
                         {% if product.product_image %}
-                            <img src="{{ product.product_image.url }}"
+                            <img src="{% static product.product_image.name %}"
                                  alt="{{ product.title }}"
                                  style="width:65px;height:65px;object-fit:cover;">
                         {% else %}
@@ -77,8 +78,8 @@
                     <td>{{ product.title }}</td>
                     <td>{{ product.brand }}</td>
                     <td>{{ product.get_category_display }}</td>
-                    <td>৳{{ product.selling_price }}</td>
-                    <td>৳{{ product.discounted_price }}</td>
+                    <td>à§³{{ product.selling_price }}</td>
+                    <td>à§³{{ product.discounted_price }}</td>
 
                     <td>
                         <a href="{% url 'admin_product_edit' product.pk %}"

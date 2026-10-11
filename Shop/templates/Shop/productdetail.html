@@ -1,4 +1,4 @@
-
+﻿
 {% extends 'Shop/base.html' %}
 {% load static %}
 
@@ -44,7 +44,7 @@
 
                 <div class="bg-light p-4 text-center">
 
-                    <img src="{{ product.product_image.url }}"
+                    <img src="{% static product.product_image.name %}"
                         alt="{{ product.title }}"
                         class="img-fluid"
                         style="height: 500px; width: 100%; object-fit: contain;">
@@ -140,7 +140,7 @@
                         </h6>
 
                         <small class="text-muted">
-                            2–5 Working Days
+                            2â€“5 Working Days
                         </small>
 
                     </div>
@@ -246,7 +246,7 @@
                     <i class="fas fa-check-circle text-success me-2"></i>
 
                     <span>
-                        Bkash Offer – 5% Unlimited Cashback on Payment
+                        Bkash Offer â€“ 5% Unlimited Cashback on Payment
                     </span>
 
                 </div>
@@ -256,7 +256,7 @@
                     <i class="fas fa-check-circle text-success me-2"></i>
 
                     <span>
-                        Special Price – Get extra Tk. 5000 off
+                        Special Price â€“ Get extra Tk. 5000 off
                     </span>
 
                 </div>
@@ -266,7 +266,7 @@
                     <i class="fas fa-check-circle text-success me-2"></i>
 
                     <span>
-                        Partner Offer – Tk. 1000 Gift Card on selected
+                        Partner Offer â€“ Tk. 1000 Gift Card on selected
                         transactions
                     </span>
 
@@ -359,3 +359,4 @@
 </div>
 
 {% endblock main-content %}
+
