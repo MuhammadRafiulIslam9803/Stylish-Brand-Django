@@ -1,4 +1,4 @@
-import logging
+﻿import logging
 from .decorators import store_admin_required
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -117,10 +117,10 @@ def show_cart(request):
                 amount += tempamount
                 totalamount = amount + shipping_amount
         else:
-            return render(request, "shop/emptycart.html")
+            return render(request, "Shop/emptycart.html")
         return render(
             request,
-            "shop/addtocart.html",
+            "Shop/addtocart.html",
             {"carts": cart, "totalamount": totalamount, "amount": amount},
         )
 
@@ -494,7 +494,7 @@ def payment_success(request):
 
         cart_items = Cart.objects.filter(user=user)
         for item in cart_items:
-            # ✅ Save tran_id when creating order
+            # âœ… Save tran_id when creating order
             OrderPlaced.objects.create(
                 user=user,
                 customer=customer,
@@ -504,11 +504,11 @@ def payment_success(request):
             )
             item.delete()
 
-        messages.success(request, f"✅ Payment Successful! Transaction ID: {tran_id}")
+        messages.success(request, f"âœ… Payment Successful! Transaction ID: {tran_id}")
         return redirect("orders")
 
     except Exception as e:
-        print("❌ Payment success error:", e)
+        print("âŒ Payment success error:", e)
         messages.error(request, "Something went wrong after payment.")
         return redirect("checkout")
 
@@ -544,11 +544,11 @@ def payment_success(request):
 #             )
 #             item.delete()
 
-#         messages.success(request, "✅ Payment Successful! Your order has been placed.")
+#         messages.success(request, "âœ… Payment Successful! Your order has been placed.")
 #         return redirect('orders')
 
 #     except Exception as e:
-#         print("❌ Payment success error:", e)
+#         print("âŒ Payment success error:", e)
 #         messages.error(request, "Something went wrong after payment.")
 #         return redirect('checkout')
 
@@ -579,13 +579,13 @@ def payment_success(request):
 
 @csrf_exempt
 def payment_fail(request):
-    messages.error(request, "❌ Payment Failed! Please try again.")
+    messages.error(request, "âŒ Payment Failed! Please try again.")
     return redirect("checkout")
 
 
 @csrf_exempt
 def payment_cancel(request):
-    messages.warning(request, "⚠️ Payment Cancelled by user.")
+    messages.warning(request, "âš ï¸ Payment Cancelled by user.")
     return redirect("checkout")
 
 
@@ -635,7 +635,7 @@ def gift_card_buy(request):
             return render_gift_card_error(
                 request,
                 "Invalid Gift Card Amount",
-                "Please select one of the available amounts: ৳500, ৳1000, or ৳2000.",
+                "Please select one of the available amounts: à§³500, à§³1000, or à§³2000.",
                 "INVALID_AMOUNT",
             )
 
