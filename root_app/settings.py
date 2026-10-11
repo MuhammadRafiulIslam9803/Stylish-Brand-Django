@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +22,28 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@nz*@(zln8dr!g^6-p2t6!08*e1vey1hyinf2t0s1)&0!62=my'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+# SECRET_KEY = 'django-insecure-@nz*@(zln8dr!g^6-p2t6!08*e1vey1hyinf2t0s1)&0!62=my'
+
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-local-development-only'
+)
+
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
+
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.environ.get(
+        'ALLOWED_HOSTS',
+        '127.0.0.1,localhost'
+    ).split(',')
+    if host.strip()
+]
 
 
 # Application definition
@@ -43,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -80,17 +98,38 @@ WSGI_APPLICATION = 'root_app.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'stylish_brand',
-        'USER': 'postgres',
-        'PASSWORD': 'rafiul',
-        'HOST': 'localhost',
-        'PORT': '5433',
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL'),
+#         conn_max_age=600,
+#         ssl_require=True,
+#     )
+# }
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=os.environ.get('DATABASE_URL'),
+            conn_max_age=600,
+            ssl_require=True,
+        )
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'stylish_brand',
+#         'USER': 'postgres',
+#         'PASSWORD': 'rafiul',
+#         'HOST': 'localhost',
+#         'PORT': '5433',
+#     }
+# }
 
 
 # DATABASES = {
@@ -139,11 +178,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+# STATIC_URL = 'static/'
+# STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 LOGIN_REDIRECT_URL = '/profile/'
-STATIC_ROOT = 'staticfiles'
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -157,9 +210,15 @@ STATIC_ROOT = 'staticfiles'
 
 
 # # SSLCommerz Sandbox Credentials
-SSLCZ_STORE_ID = 'rafiu6ac77b6ba4fa5'
-SSLCZ_STORE_PASS = 'XflKKMP3o996'
-SSLCZ_IS_SANDBOX = True
+# SSLCZ_STORE_ID = 'rafiu6ac77b6ba4fa5'
+# SSLCZ_STORE_PASS = 'XflKKMP3o996'
+# SSLCZ_IS_SANDBOX = True
+
+SSLCZ_STORE_ID = os.environ.get('SSLCZ_STORE_ID', '')
+SSLCZ_STORE_PASS = os.environ.get('SSLCZ_STORE_PASS', '')
+SSLCZ_IS_SANDBOX = (
+    os.environ.get('SSLCZ_IS_SANDBOX', 'True').lower() == 'true'
+)
 
 
 # CSRF_TRUSTED_ORIGINS = [
@@ -174,8 +233,22 @@ SSLCZ_IS_SANDBOX = True
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
+# MAILERS = {
+#     'default': {
+#         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+#     },
+# }
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'HOST': os.environ.get('EMAIL_HOST', 'smtp.gmail.com'),
+        'PORT': int(os.environ.get('EMAIL_PORT', '587')),
+        'USE_TLS': True,
+        'USERNAME': os.environ.get('EMAIL_HOST_USER', ''),
+        'PASSWORD': os.environ.get('EMAIL_HOST_PASSWORD', ''),
+        'DEFAULT_FROM_EMAIL': os.environ.get(
+            'DEFAULT_FROM_EMAIL',
+            os.environ.get('EMAIL_HOST_USER', '')
+        ),
     },
 }
